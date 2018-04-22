@@ -23,8 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class AlumnoController {
 
 	@Autowired
-	private AlumnoService alumnoService;
-	
+	private AlumnoService alumnoService;	
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
@@ -43,13 +42,12 @@ public class AlumnoController {
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
 	public Alumno createAlumno(@RequestBody Alumno alumno) throws InvalidAlumnoException {
-		Alumno alumnoCreado = alumnoService.crearAlumno(alumno);
-		return alumnoCreado;
+		return alumnoService.crearAlumno(alumno);
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public Alumno getEntidad(@PathVariable("id") int id) throws InvalidAlumnoException {
+	public Alumno getAlumno(@PathVariable("id") int id) throws InvalidAlumnoException {
 		return alumnoService.getAlumno(id);
 	}
 
