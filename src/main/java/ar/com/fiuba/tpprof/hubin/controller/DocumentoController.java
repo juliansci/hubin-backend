@@ -1,5 +1,7 @@
 package ar.com.fiuba.tpprof.hubin.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ar.com.fiuba.tpprof.hubin.dto.DocumentoRequestDTO;
@@ -53,6 +56,16 @@ public class DocumentoController {
 	@ResponseBody
 	public VersionResponseDTO getDocumento(@PathVariable("idDocumento") int idDocumento, @PathVariable("idVersion") int idVersion) throws InvalidDocumentoException {
 		return documentoService.getDocumento(idDocumento, idVersion);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	@ResponseBody
+	public List<Documento> getDocumentos(@RequestParam(value = "nombre", required = false) String nombre,
+			@RequestParam(value = "entidad", required = false) String entidad,
+			@RequestParam(value = "materia", required = false) String materia,
+			@RequestParam(value = "idioma", required = false) String idioma,
+			@RequestParam(value = "nivel", required = false) String nivel) throws InvalidDocumentoException {
+		return documentoService.getDocumentos(nombre, entidad, materia, idioma, nivel);
 	}
 
 }

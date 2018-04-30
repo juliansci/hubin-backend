@@ -47,6 +47,10 @@ public class Documento {
 	
 	private Date fechaUltModificacion;
 	
+	private String idioma;
+	
+	private String nivel;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "materia_id")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -81,7 +85,9 @@ public class Documento {
 		this.eliminado = false;
 		this.publico = documentoRequestDTO.isPublico();		
 		DateFormat format = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
-		this.fechaUltModificacion = format.parse(documentoRequestDTO.getFechaUltModificacion());		
+		this.fechaUltModificacion = format.parse(documentoRequestDTO.getFechaUltModificacion());	
+		this.idioma = documentoRequestDTO.getIdioma();
+		this.nivel = documentoRequestDTO.getNivel();
 	}
 
 	public Integer getId() {
@@ -145,6 +151,22 @@ public class Documento {
 		this.fechaUltModificacion = format.parse(fechaUltModificacion);		
 	}
 	
+	public String getIdioma() {
+		return idioma;
+	}
+
+	public void setIdioma(String idioma) {
+		this.idioma = idioma;
+	}
+
+	public String getNivel() {
+		return nivel;
+	}
+
+	public void setNivel(String nivel) {
+		this.nivel = nivel;
+	}
+
 	public Materia getMateria() {
 		return materia;
 	}
@@ -190,7 +212,9 @@ public class Documento {
 		this.extension = documentoUpdateRequestDTO.getExtension();
 		this.descripcion = documentoUpdateRequestDTO.getDescripcion();
 		this.eliminado = documentoUpdateRequestDTO.isEliminado();
-		this.publico = documentoUpdateRequestDTO.isPublico();		
+		this.publico = documentoUpdateRequestDTO.isPublico();	
+		this.idioma = documentoUpdateRequestDTO.getIdioma();
+		this.nivel = documentoUpdateRequestDTO.getNivel();
 	}
 
 }

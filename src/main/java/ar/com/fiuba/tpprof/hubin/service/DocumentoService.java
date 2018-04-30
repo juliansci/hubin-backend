@@ -135,4 +135,8 @@ public class DocumentoService {
 		throw new InvalidDocumentoException("Version de documento inexistente");
 	}
 
+	public List<Documento> getDocumentos(String nombre, String entidad, String materia, String idioma, String nivel) {		
+		return documentoDao.buscarDocumentos(nombre, entidad, materia, idioma, nivel);
+	}
+
 }

@@ -15,6 +15,10 @@ public class DocumentoUpdateRequestDTO {
 	
 	private boolean publico;
 	
+	private String idioma;
+	
+	private String nivel;
+	
 	private List<String> compartidos = new ArrayList<String>();
 
 	public String getNombre() {
@@ -55,6 +59,22 @@ public class DocumentoUpdateRequestDTO {
 
 	public void setPublico(boolean publico) {
 		this.publico = publico;
+	}
+
+	public String getIdioma() {
+		return idioma;
+	}
+
+	public void setIdioma(String idioma) {
+		this.idioma = idioma;
+	}
+
+	public String getNivel() {
+		return nivel;
+	}
+
+	public void setNivel(String nivel) {
+		this.nivel = nivel;
 	}
 
 	public List<String> getCompartidos() {

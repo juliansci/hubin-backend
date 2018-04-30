@@ -12,6 +12,10 @@ public class DocumentoRequestDTO {
 	
 	private String fechaUltModificacion;
 	
+	private String idioma;
+	
+	private String nivel;
+	
 	private String data;
 	
 	private String idMateria;
@@ -56,6 +60,22 @@ public class DocumentoRequestDTO {
 
 	public void setFechaUltModificacion(String fechaUltModificacion) {
 		this.fechaUltModificacion = fechaUltModificacion;
+	}
+
+	public String getIdioma() {
+		return idioma;
+	}
+
+	public void setIdioma(String idioma) {
+		this.idioma = idioma;
+	}
+
+	public String getNivel() {
+		return nivel;
+	}
+
+	public void setNivel(String nivel) {
+		this.nivel = nivel;
 	}
 
 	public String getData() {
