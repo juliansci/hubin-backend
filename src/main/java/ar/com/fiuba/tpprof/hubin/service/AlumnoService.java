@@ -1,8 +1,13 @@
 package ar.com.fiuba.tpprof.hubin.service;
 
+import java.text.ParseException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.com.fiuba.tpprof.hubin.dto.AlumnoRequestDTO;
+import ar.com.fiuba.tpprof.hubin.dto.AlumnoResponseDTO;
+import ar.com.fiuba.tpprof.hubin.dto.AlumnoUpdateRequestDTO;
 import ar.com.fiuba.tpprof.hubin.exception.InvalidAlumnoException;
 import ar.com.fiuba.tpprof.hubin.model.Alumno;
 import ar.com.fiuba.tpprof.hubin.repository.AlumnoDao;
@@ -13,38 +18,53 @@ public class AlumnoService {
 	@Autowired
 	private AlumnoDao alumnoDao;
 
-	public Alumno crearAlumno(Alumno alumno) throws InvalidAlumnoException {
-		if (alumno.getUsername() == null || alumno.getPassword() == null) {
+	public AlumnoResponseDTO crearAlumno(AlumnoRequestDTO alumnoRequestDTO) throws InvalidAlumnoException {
+		if (alumnoRequestDTO.getUsername() == null || alumnoRequestDTO.getPassword() == null) {
 			throw new InvalidAlumnoException("Datos incompletos");
 		}
-		if (alumnoDao.findByUsername(alumno.getUsername()) != null) {
+		if (alumnoDao.findByUsername(alumnoRequestDTO.getUsername()) != null) {
 			throw new InvalidAlumnoException("El nombre de usuario ya existe");
 		}
-		Alumno alumnoNuevo = new Alumno();
-		alumnoNuevo.setDni(alumno.getDni());
-		alumnoNuevo.setFechaNac(alumno.getFechaNac());
-		alumnoNuevo.setEmail(alumno.getEmail());
-		alumnoNuevo.setFoto(alumno.getFoto());
-		alumnoNuevo.setPassword(alumno.getPassword());
-		alumnoNuevo.setUsername(alumno.getUsername());
-		alumnoDao.save(alumnoNuevo);
-		return alumnoNuevo;
+		Alumno alumno = null;
+		try {
+			alumno = new Alumno(alumnoRequestDTO);
+		} catch (ParseException e) {
+			throw new InvalidAlumnoException("Formato de fecha incorrecto");
+		}
+		alumnoDao.save(alumno);
+		return new AlumnoResponseDTO(alumno);
 	}
 	
-	public Alumno getAlumno(String username) throws InvalidAlumnoException {
+	public AlumnoResponseDTO getAlumno(String username) throws InvalidAlumnoException {
 		Alumno alumno = alumnoDao.findByUsername(username);
 		if (alumno == null) {
 			throw new InvalidAlumnoException("El nombre de usuario no existe");
 		}
-		return alumno;
+		return new AlumnoResponseDTO(alumno);
 	}
 	
-	public Alumno getAlumno(int id) throws InvalidAlumnoException {
+	public AlumnoResponseDTO getAlumno(int id) throws InvalidAlumnoException {
 		Alumno alumno = alumnoDao.findOne(id);
 		if (alumno == null) {
 			throw new InvalidAlumnoException("El nombre de usuario no existe");
 		}
-		return alumno;
+		return new AlumnoResponseDTO(alumno);
+	}
+
+	public AlumnoResponseDTO updateAlumno(int id, AlumnoUpdateRequestDTO alumnoUpdateRequestDTO) throws InvalidAlumnoException {
+		if (!alumnoUpdateRequestDTO.isValid())
+			throw new InvalidAlumnoException("Datos incompletos");		
+		Alumno alumno = alumnoDao.findOne(id);
+		if (alumno == null) {
+			throw new InvalidAlumnoException("El nombre de usuario no existe");
+		}		
+		try {
+			alumno.update(alumnoUpdateRequestDTO);
+		} catch (ParseException e) {
+			throw new InvalidAlumnoException("Formato de fecha incorrecto");
+		}		
+		alumnoDao.save(alumno);		
+		return new AlumnoResponseDTO(alumno);
 	}
 
 }

@@ -1,25 +1,28 @@
 package ar.com.fiuba.tpprof.hubin.model;
 
 import java.nio.charset.StandardCharsets;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import ar.com.fiuba.tpprof.hubin.dto.AlumnoRequestDTO;
+import ar.com.fiuba.tpprof.hubin.dto.AlumnoUpdateRequestDTO;
 
 @Entity
 @Table(name = "alumno")
@@ -30,29 +33,36 @@ public class Alumno {
 	private Integer id;
 
 	private String username;
-
-	@JsonProperty(access = Access.WRITE_ONLY)
+	
 	private String password;
 	
 	private Integer dni;
 	
 	private String email;
 	
-	private String foto;
+	@Lob
+	@Column(length=2097152) //maximo tamaño 2MB
+	private byte[] foto;
 	
-	private String fechaNac;
+	private Date fechaNac;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "creador", cascade = CascadeType.ALL, orphanRemoval=true)
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = true)
 	private List<Documento> documentosCreados = new ArrayList<Documento>();
 	
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy="compartidos", cascade = CascadeType.ALL)
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = true)
 	private List<Documento> documentosConAcceso = new ArrayList<Documento>();
 
 	public Alumno() {
+	}
+	
+	public Alumno(AlumnoRequestDTO alumnoRequestDTO) throws ParseException {		
+		dni = Integer.parseInt(alumnoRequestDTO.getDni());
+		DateFormat format = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
+		fechaNac = format.parse(alumnoRequestDTO.getFechaNac());
+		email = alumnoRequestDTO.getEmail();
+		foto = alumnoRequestDTO.getFoto().getBytes();
+		username = alumnoRequestDTO.getUsername();
+		setPassword(alumnoRequestDTO.getPassword());
 	}
 
 	public Integer getId() {
@@ -99,19 +109,19 @@ public class Alumno {
 		this.email = email;
 	}
 
-	public String getFoto() {
+	public byte[] getFoto() {
 		return foto;
 	}
 
-	public void setFoto(String foto) {
+	public void setFoto(byte[] foto) {
 		this.foto = foto;
 	}
 
-	public String getFechaNac() {
+	public Date getFechaNac() {
 		return fechaNac;
 	}
 
-	public void setFechaNac(String fechaNac) {
+	public void setFechaNac(Date fechaNac) {
 		this.fechaNac = fechaNac;
 	}
 
@@ -162,6 +172,15 @@ public class Alumno {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public void update(AlumnoUpdateRequestDTO alumnoUpdateRequestDTO) throws ParseException {
+		setPassword(alumnoUpdateRequestDTO.getPassword());
+		dni = Integer.parseInt(alumnoUpdateRequestDTO.getDni());
+		email = alumnoUpdateRequestDTO.getEmail();
+		foto = alumnoUpdateRequestDTO.getFoto().getBytes();
+		DateFormat format = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
+		fechaNac = format.parse(alumnoUpdateRequestDTO.getFechaNac());
 	}
 
 }

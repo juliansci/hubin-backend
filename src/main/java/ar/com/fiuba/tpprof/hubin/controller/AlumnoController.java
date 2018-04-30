@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import ar.com.fiuba.tpprof.hubin.dto.AlumnoRequestDTO;
+import ar.com.fiuba.tpprof.hubin.dto.AlumnoResponseDTO;
+import ar.com.fiuba.tpprof.hubin.dto.AlumnoUpdateRequestDTO;
 import ar.com.fiuba.tpprof.hubin.exception.InvalidAlumnoException;
-import ar.com.fiuba.tpprof.hubin.model.Alumno;
 import ar.com.fiuba.tpprof.hubin.service.AlumnoService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +29,7 @@ public class AlumnoController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public Alumno login() throws InvalidAlumnoException {		
+	public AlumnoResponseDTO login() throws InvalidAlumnoException {		
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = userDetails.getUsername();
 		return alumnoService.getAlumno(username);
@@ -41,14 +43,20 @@ public class AlumnoController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
-	public Alumno createAlumno(@RequestBody Alumno alumno) throws InvalidAlumnoException {
-		return alumnoService.crearAlumno(alumno);
+	public AlumnoResponseDTO createAlumno(@RequestBody AlumnoRequestDTO alumnoRequestDTO) throws InvalidAlumnoException {
+		return alumnoService.crearAlumno(alumnoRequestDTO);
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public Alumno getAlumno(@PathVariable("id") int id) throws InvalidAlumnoException {
+	public AlumnoResponseDTO getAlumno(@PathVariable("id") int id) throws InvalidAlumnoException {
 		return alumnoService.getAlumno(id);
+	}
+	
+	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
+	@ResponseBody
+	public AlumnoResponseDTO updateDocumento(@PathVariable("id") int id, @RequestBody AlumnoUpdateRequestDTO alumnoUpdateRequestDTO) throws InvalidAlumnoException {
+		return alumnoService.updateAlumno(id, alumnoUpdateRequestDTO);
 	}
 
 }
