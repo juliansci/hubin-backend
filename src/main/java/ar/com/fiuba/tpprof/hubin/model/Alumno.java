@@ -55,12 +55,16 @@ public class Alumno {
 	public Alumno() {
 	}
 	
-	public Alumno(AlumnoRequestDTO alumnoRequestDTO) throws ParseException {		
-		dni = Integer.parseInt(alumnoRequestDTO.getDni());
-		DateFormat format = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
-		fechaNac = format.parse(alumnoRequestDTO.getFechaNac());
+	public Alumno(AlumnoRequestDTO alumnoRequestDTO) throws ParseException {	
+		if (alumnoRequestDTO.getDni() != null)
+			dni = Integer.parseInt(alumnoRequestDTO.getDni());
+		if (alumnoRequestDTO.getFechaNac() != null) {
+			DateFormat format = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
+			fechaNac = format.parse(alumnoRequestDTO.getFechaNac());
+		}
+		if (alumnoRequestDTO.getFoto() != null)
+			foto = alumnoRequestDTO.getFoto().getBytes();
 		email = alumnoRequestDTO.getEmail();
-		foto = alumnoRequestDTO.getFoto().getBytes();
 		username = alumnoRequestDTO.getUsername();
 		setPassword(alumnoRequestDTO.getPassword());
 	}
@@ -176,11 +180,15 @@ public class Alumno {
 
 	public void update(AlumnoUpdateRequestDTO alumnoUpdateRequestDTO) throws ParseException {
 		setPassword(alumnoUpdateRequestDTO.getPassword());
-		dni = Integer.parseInt(alumnoUpdateRequestDTO.getDni());
 		email = alumnoUpdateRequestDTO.getEmail();
-		foto = alumnoUpdateRequestDTO.getFoto().getBytes();
-		DateFormat format = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
-		fechaNac = format.parse(alumnoUpdateRequestDTO.getFechaNac());
+		if (alumnoUpdateRequestDTO.getDni() != null)
+			dni = Integer.parseInt(alumnoUpdateRequestDTO.getDni());
+		if (alumnoUpdateRequestDTO.getFoto() != null)
+			foto = alumnoUpdateRequestDTO.getFoto().getBytes();
+		if (alumnoUpdateRequestDTO.getFechaNac() != null) {
+			DateFormat format = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
+			fechaNac = format.parse(alumnoUpdateRequestDTO.getFechaNac());
+		}
 	}
 
 }

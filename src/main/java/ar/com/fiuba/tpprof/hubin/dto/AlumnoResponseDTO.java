@@ -37,11 +37,15 @@ public class AlumnoResponseDTO {
 	public AlumnoResponseDTO(Alumno alumno) {
 		id = String.valueOf(alumno.getId());
 		username = alumno.getUsername();
-		dni = String.valueOf(alumno.getDni());
 		email = alumno.getEmail();
-		foto = new String(alumno.getFoto());
-		DateFormat format = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
-		fechaNac = format.format(alumno.getFechaNac());
+		if (alumno.getDni() != null)
+			dni = String.valueOf(alumno.getDni());
+		if (alumno.getFoto() != null)
+			foto = new String(alumno.getFoto());
+		if (alumno.getFechaNac() != null) {
+			DateFormat format = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
+			fechaNac = format.format(alumno.getFechaNac());
+		}
 		documentosCreados = new ArrayList<Documento>(alumno.getDocumentosCreados());
 		documentosConAcceso = new ArrayList<Documento>(alumno.getDocumentosConAcceso());
 	}
