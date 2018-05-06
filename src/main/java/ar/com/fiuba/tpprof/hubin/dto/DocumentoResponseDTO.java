@@ -11,7 +11,9 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import ar.com.fiuba.tpprof.hubin.model.Alumno;
 import ar.com.fiuba.tpprof.hubin.model.Documento;
+import ar.com.fiuba.tpprof.hubin.model.Idioma;
 import ar.com.fiuba.tpprof.hubin.model.Materia;
+import ar.com.fiuba.tpprof.hubin.model.Nivel;
 import ar.com.fiuba.tpprof.hubin.model.Version;
 
 public class DocumentoResponseDTO {
@@ -30,9 +32,13 @@ public class DocumentoResponseDTO {
 	
 	private String fechaUltModificacion;
 	
-	private String idioma;
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "code")
+	@JsonIdentityReference(alwaysAsId = true)
+	private Idioma idioma;
 	
-	private String nivel;
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "code")
+	@JsonIdentityReference(alwaysAsId = true)
+	private Nivel nivel;
 	
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "nombre")
 	@JsonIdentityReference(alwaysAsId = true)
@@ -57,6 +63,8 @@ public class DocumentoResponseDTO {
 			DateFormat format = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
 			fechaUltModificacion = format.format(documento.getFechaUltModificacion());
 		}
+		idioma = documento.getIdioma();
+		nivel = documento.getNivel();
 		materia = documento.getMateria();
 		creador = documento.getCreador();
 		versiones = documento.getVersiones();
@@ -118,19 +126,19 @@ public class DocumentoResponseDTO {
 		this.fechaUltModificacion = fechaUltModificacion;
 	}
 
-	public String getIdioma() {
+	public Idioma getIdioma() {
 		return idioma;
 	}
 
-	public void setIdioma(String idioma) {
+	public void setIdioma(Idioma idioma) {
 		this.idioma = idioma;
 	}
 
-	public String getNivel() {
+	public Nivel getNivel() {
 		return nivel;
 	}
 
-	public void setNivel(String nivel) {
+	public void setNivel(Nivel nivel) {
 		this.nivel = nivel;
 	}
 

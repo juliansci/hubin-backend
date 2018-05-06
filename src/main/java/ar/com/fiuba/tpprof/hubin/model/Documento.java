@@ -20,10 +20,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import ar.com.fiuba.tpprof.hubin.dto.DocumentoRequestDTO;
 import ar.com.fiuba.tpprof.hubin.dto.DocumentoUpdateRequestDTO;
 
@@ -47,33 +43,28 @@ public class Documento {
 	
 	private Date fechaUltModificacion;
 	
-	private String idioma;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idioma_id")
+	private Idioma idioma;
 	
-	private String nivel;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "nivel_id")
+	private Nivel nivel;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "materia_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "nombre")
-	@JsonIdentityReference(alwaysAsId = true)
 	private Materia materia;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "alumno_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = true)
 	private Alumno creador;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "documento", cascade = CascadeType.ALL, orphanRemoval=true)
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = true)
 	private List<Version> versiones = new ArrayList<Version>();	
 	
 	@ManyToMany
 	@JoinTable(name="compartido", joinColumns=@JoinColumn(name="documento_id", referencedColumnName="id"), inverseJoinColumns=@JoinColumn(name="alumno_id", referencedColumnName="id"))
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = true)
-	private List<Alumno> compartidos = new ArrayList<Alumno>();
-	
+	private List<Alumno> compartidos = new ArrayList<Alumno>();	
 
 	public Documento() {
 	}
@@ -85,9 +76,7 @@ public class Documento {
 		this.eliminado = false;
 		this.publico = documentoRequestDTO.isPublico();		
 		DateFormat format = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
-		this.fechaUltModificacion = format.parse(documentoRequestDTO.getFechaUltModificacion());	
-		this.idioma = documentoRequestDTO.getIdioma();
-		this.nivel = documentoRequestDTO.getNivel();
+		this.fechaUltModificacion = format.parse(documentoRequestDTO.getFechaUltModificacion());
 	}
 
 	public Integer getId() {
@@ -151,19 +140,19 @@ public class Documento {
 		this.fechaUltModificacion = format.parse(fechaUltModificacion);		
 	}
 	
-	public String getIdioma() {
+	public Idioma getIdioma() {
 		return idioma;
 	}
 
-	public void setIdioma(String idioma) {
+	public void setIdioma(Idioma idioma) {
 		this.idioma = idioma;
 	}
 
-	public String getNivel() {
+	public Nivel getNivel() {
 		return nivel;
 	}
 
-	public void setNivel(String nivel) {
+	public void setNivel(Nivel nivel) {
 		this.nivel = nivel;
 	}
 
@@ -212,9 +201,7 @@ public class Documento {
 		this.extension = documentoUpdateRequestDTO.getExtension();
 		this.descripcion = documentoUpdateRequestDTO.getDescripcion();
 		this.eliminado = documentoUpdateRequestDTO.isEliminado();
-		this.publico = documentoUpdateRequestDTO.isPublico();	
-		this.idioma = documentoUpdateRequestDTO.getIdioma();
-		this.nivel = documentoUpdateRequestDTO.getNivel();
+		this.publico = documentoUpdateRequestDTO.isPublico();
 	}
 
 }

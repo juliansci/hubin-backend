@@ -12,9 +12,9 @@ public class DocumentoRequestDTO {
 	
 	private String fechaUltModificacion;
 	
-	private String idioma;
+	private String idIdioma;
 	
-	private String nivel;
+	private String idNivel;
 	
 	private String data;
 	
@@ -62,20 +62,20 @@ public class DocumentoRequestDTO {
 		this.fechaUltModificacion = fechaUltModificacion;
 	}
 
-	public String getIdioma() {
-		return idioma;
+	public String getIdIdioma() {
+		return idIdioma;
 	}
 
-	public void setIdioma(String idioma) {
-		this.idioma = idioma;
+	public void setIdIdioma(String idIdioma) {
+		this.idIdioma = idIdioma;
 	}
 
-	public String getNivel() {
-		return nivel;
+	public String getIdNivel() {
+		return idNivel;
 	}
 
-	public void setNivel(String nivel) {
-		this.nivel = nivel;
+	public void setIdNivel(String idNivel) {
+		this.idNivel = idNivel;
 	}
 
 	public String getData() {
@@ -103,7 +103,7 @@ public class DocumentoRequestDTO {
 	}
 	
 	public boolean isValid() {
-		return (!nombre.isEmpty() && !extension.isEmpty() && !fechaUltModificacion.isEmpty() && !data.isEmpty() && !idMateria.isEmpty() && !idCreador.isEmpty());
+		return (!nombre.isEmpty() && !extension.isEmpty() && !fechaUltModificacion.isEmpty() && !data.isEmpty() && !idIdioma.isEmpty() && !idNivel.isEmpty() && !idMateria.isEmpty() && !idCreador.isEmpty());
 	}
 
 }

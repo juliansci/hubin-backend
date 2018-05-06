@@ -26,6 +26,8 @@ public class Area {
 	private Integer id;
 
 	private String nombre;
+	
+	private String code;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "entidad_id")
@@ -53,6 +55,14 @@ public class Area {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public Entidad getEntidad() {

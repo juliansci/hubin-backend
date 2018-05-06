@@ -15,9 +15,9 @@ public class DocumentoUpdateRequestDTO {
 	
 	private boolean publico;
 	
-	private String idioma;
+	private String idIdioma;
 	
-	private String nivel;
+	private String idNivel;
 	
 	private List<String> compartidos = new ArrayList<String>();
 
@@ -61,20 +61,20 @@ public class DocumentoUpdateRequestDTO {
 		this.publico = publico;
 	}
 
-	public String getIdioma() {
-		return idioma;
+	public String getIdIdioma() {
+		return idIdioma;
 	}
 
-	public void setIdioma(String idioma) {
-		this.idioma = idioma;
+	public void setIdIdioma(String idIdioma) {
+		this.idIdioma = idIdioma;
 	}
 
-	public String getNivel() {
-		return nivel;
+	public String getIdNivel() {
+		return idNivel;
 	}
 
-	public void setNivel(String nivel) {
-		this.nivel = nivel;
+	public void setIdNivel(String idNivel) {
+		this.idNivel = idNivel;
 	}
 
 	public List<String> getCompartidos() {
@@ -90,7 +90,7 @@ public class DocumentoUpdateRequestDTO {
 	}
 
 	public boolean isValid() {
-		return (!nombre.isEmpty() && !extension.isEmpty());
+		return (!nombre.isEmpty() && !extension.isEmpty() && !idIdioma.isEmpty() && !idNivel.isEmpty());
 	}
 
 }

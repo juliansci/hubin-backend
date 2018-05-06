@@ -17,7 +17,7 @@ public class MateriaResponseDTO {
 
 	private String nombre;
 	
-	private String codigo;
+	private String code;
 
 	private String foto;
 
@@ -32,7 +32,7 @@ public class MateriaResponseDTO {
 	public MateriaResponseDTO(Materia materia) {
 		id = String.valueOf(materia.getId());
 		nombre = materia.getNombre();
-		codigo = materia.getCodigo();
+		code = materia.getCode();
 		if (materia.getFoto() != null)
 			foto = new String(materia.getFoto());
 		area = materia.getArea();
@@ -55,12 +55,12 @@ public class MateriaResponseDTO {
 		this.nombre = nombre;
 	}
 
-	public String getCodigo() {
-		return codigo;
+	public String getCode() {
+		return code;
 	}
 
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getFoto() {

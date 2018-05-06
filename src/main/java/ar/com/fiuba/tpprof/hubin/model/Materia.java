@@ -31,7 +31,7 @@ public class Materia {
 
 	private String nombre;
 	
-	private String codigo;
+	private String code;
 	
 	private boolean destacada;
 	
@@ -68,12 +68,12 @@ public class Materia {
 		this.nombre = nombre;
 	}
 
-	public String getCodigo() {
-		return codigo;
+	public String getCode() {
+		return code;
 	}
 
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public boolean isDestacada() {

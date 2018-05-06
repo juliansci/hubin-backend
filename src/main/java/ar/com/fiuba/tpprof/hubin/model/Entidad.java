@@ -28,6 +28,8 @@ public class Entidad {
 	private String cuit;
 
 	private String nombre;
+	
+	private String code;
 
 	private String direccion;
 
@@ -67,6 +69,14 @@ public class Entidad {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getDireccion() {

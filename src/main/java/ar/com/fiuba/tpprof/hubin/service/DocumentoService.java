@@ -1,23 +1,29 @@
 package ar.com.fiuba.tpprof.hubin.service;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.com.fiuba.tpprof.hubin.dto.DocumentoRequestDTO;
+import ar.com.fiuba.tpprof.hubin.dto.DocumentoResponseDTO;
 import ar.com.fiuba.tpprof.hubin.dto.DocumentoUpdateDataRequestDTO;
 import ar.com.fiuba.tpprof.hubin.dto.DocumentoUpdateRequestDTO;
 import ar.com.fiuba.tpprof.hubin.dto.VersionResponseDTO;
 import ar.com.fiuba.tpprof.hubin.exception.InvalidDocumentoException;
 import ar.com.fiuba.tpprof.hubin.model.Alumno;
 import ar.com.fiuba.tpprof.hubin.model.Documento;
+import ar.com.fiuba.tpprof.hubin.model.Idioma;
 import ar.com.fiuba.tpprof.hubin.model.Materia;
+import ar.com.fiuba.tpprof.hubin.model.Nivel;
 import ar.com.fiuba.tpprof.hubin.model.Version;
 import ar.com.fiuba.tpprof.hubin.repository.AlumnoDao;
 import ar.com.fiuba.tpprof.hubin.repository.DocumentoDao;
+import ar.com.fiuba.tpprof.hubin.repository.IdiomaDao;
 import ar.com.fiuba.tpprof.hubin.repository.MateriaDao;
+import ar.com.fiuba.tpprof.hubin.repository.NivelDao;
 
 @Service
 public class DocumentoService {
@@ -30,8 +36,14 @@ public class DocumentoService {
 	
 	@Autowired
 	private MateriaDao materiaDao;
+	
+	@Autowired
+	private IdiomaDao idiomaDao;
+	
+	@Autowired
+	private NivelDao nivelDao;
 
-	public Documento crearDocumento(DocumentoRequestDTO documentoRequestDTO) throws InvalidDocumentoException {
+	public DocumentoResponseDTO crearDocumento(DocumentoRequestDTO documentoRequestDTO) throws InvalidDocumentoException {
 
 		if (!documentoRequestDTO.isValid())
 			throw new InvalidDocumentoException("Datos incompletos");
@@ -51,6 +63,14 @@ public class DocumentoService {
 		if (materia == null)
 			throw new InvalidDocumentoException("Materia desconocida");
 		
+		Idioma idioma = idiomaDao.findOne(Integer.parseInt(documentoRequestDTO.getIdIdioma()));
+		if (idioma == null)
+			throw new InvalidDocumentoException("Idioma desconocido");
+		
+		Nivel nivel = nivelDao.findOne(Integer.parseInt(documentoRequestDTO.getIdNivel()));
+		if (nivel == null)
+			throw new InvalidDocumentoException("Nivel desconocido");
+		
 		Version version = new Version();
 		version.setData(documentoRequestDTO.getData().getBytes());
 		version.setDocumento(documento);
@@ -58,11 +78,15 @@ public class DocumentoService {
 		documento.addVersion(version);
 		documento.setCreador(alumno);
 		documento.setMateria(materia);
+		documento.setIdioma(idioma);
+		documento.setNivel(nivel);
 		
-		return documentoDao.save(documento);
+		documentoDao.save(documento);
+		
+		return new DocumentoResponseDTO(documento);
 	}
 
-	public Documento updateDocumento(int id, DocumentoUpdateRequestDTO documentoUpdateRequestDTO) throws InvalidDocumentoException {
+	public DocumentoResponseDTO updateDocumento(int id, DocumentoUpdateRequestDTO documentoUpdateRequestDTO) throws InvalidDocumentoException {
 		
 		if (!documentoUpdateRequestDTO.isValid())
 			throw new InvalidDocumentoException("Datos incompletos");
@@ -86,12 +110,18 @@ public class DocumentoService {
 			}
 		}
 		
+		Idioma idioma = idiomaDao.findOne(Integer.parseInt(documentoUpdateRequestDTO.getIdIdioma()));
+		documento.setIdioma(idioma);
+		Nivel nivel = nivelDao.findOne(Integer.parseInt(documentoUpdateRequestDTO.getIdNivel()));
+		documento.setNivel(nivel);
 		documento.update(documentoUpdateRequestDTO);
 		
-		return documentoDao.save(documento);
+		documentoDao.save(documento);
+		
+		return new DocumentoResponseDTO(documento);
 	}
 
-	public Documento updateDocumento(int id, DocumentoUpdateDataRequestDTO documentoUpdateDataRequestDTO) throws InvalidDocumentoException {
+	public DocumentoResponseDTO updateDocumento(int id, DocumentoUpdateDataRequestDTO documentoUpdateDataRequestDTO) throws InvalidDocumentoException {
 		
 		if (!documentoUpdateDataRequestDTO.isValid())
 			throw new InvalidDocumentoException("Datos incompletos");
@@ -112,14 +142,16 @@ public class DocumentoService {
 		
 		documento.addVersion(version);
 		
-		return documentoDao.save(documento);
+		documentoDao.save(documento);
+		
+		return new DocumentoResponseDTO(documento);
 	}
 	
-	public Documento getDocumento(int idDocumento) throws InvalidDocumentoException {		
+	public DocumentoResponseDTO getDocumento(int idDocumento) throws InvalidDocumentoException {		
 		Documento documento = documentoDao.findOne(idDocumento);
 		if (documento == null)
 			throw new InvalidDocumentoException("Documento inexistente");
-		return documento;
+		return new DocumentoResponseDTO(documento);
 	}
 
 	public VersionResponseDTO getDocumento(int idDocumento, int idVersion) throws InvalidDocumentoException {		
@@ -135,8 +167,13 @@ public class DocumentoService {
 		throw new InvalidDocumentoException("Version de documento inexistente");
 	}
 
-	public List<Documento> getDocumentos(String nombre, String entidad, String materia, String idioma, String nivel) {		
-		return documentoDao.buscarDocumentos(nombre, entidad, materia, idioma, nivel);
+	public List<DocumentoResponseDTO> getDocumentos(String nombre, String materia, String idioma, String nivel) {	
+		List<Documento> documentos = documentoDao.buscarDocumentos(nombre, materia, idioma, nivel);
+		List<DocumentoResponseDTO> documentosResponse = new ArrayList<DocumentoResponseDTO>();
+		for (Documento documento : documentos) {
+			documentosResponse.add(new DocumentoResponseDTO(documento));
+		}
+		return documentosResponse;
 	}
 
 }

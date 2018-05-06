@@ -29,6 +29,7 @@ public class EntidadService {
 			throw new InvalidEntidadException("Entidad desconocida");
 		entidad.setCuit(e.getCuit());
 		entidad.setNombre(e.getNombre());
+		entidad.setCode(e.getCode());
 		entidad.setDireccion(e.getDireccion());
 		entidad.setTelefono(e.getTelefono());
 		entidad.setEmail(e.getEmail());
@@ -82,6 +83,7 @@ public class EntidadService {
 		for(Area a : areas) {
 			if (a.getId().equals(idArea)) {
 				a.setNombre(area.getNombre());
+				a.setCode(area.getCode());
 				return entidadDao.save(entidad);
 			}
 		}
@@ -134,7 +136,7 @@ public class EntidadService {
 				List<Materia> materias = area.getMaterias();
 				for(Materia m : materias) {
 					if (m.getId().equals(idMateria)) {
-						m.setCodigo(materia.getCodigo());
+						m.setCode(materia.getCode());
 						m.setNombre(materia.getNombre());
 						return entidadDao.save(entidad);
 					}					
