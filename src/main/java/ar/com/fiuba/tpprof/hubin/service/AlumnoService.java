@@ -5,6 +5,7 @@ import java.text.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.com.fiuba.tpprof.hubin.dto.AlumnoDocumentosResponseDTO;
 import ar.com.fiuba.tpprof.hubin.dto.AlumnoRequestDTO;
 import ar.com.fiuba.tpprof.hubin.dto.AlumnoResponseDTO;
 import ar.com.fiuba.tpprof.hubin.dto.AlumnoUpdateRequestDTO;
@@ -65,6 +66,14 @@ public class AlumnoService {
 		}		
 		alumnoDao.save(alumno);		
 		return new AlumnoResponseDTO(alumno);
+	}
+
+	public AlumnoDocumentosResponseDTO getDocumentos(int id) throws InvalidAlumnoException {
+		Alumno alumno = alumnoDao.findOne(id);
+		if (alumno == null) {
+			throw new InvalidAlumnoException("El nombre de usuario no existe");
+		}		
+		return new AlumnoDocumentosResponseDTO(alumno);
 	}
 
 }

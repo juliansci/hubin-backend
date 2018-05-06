@@ -53,7 +53,7 @@ public class Documento {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "materia_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "nombre")
 	@JsonIdentityReference(alwaysAsId = true)
 	private Materia materia;
 	

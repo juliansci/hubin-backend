@@ -21,6 +21,10 @@ public class AlumnoResponseDTO {
 	private String dni;
 
 	private String email;
+	
+	private String nombre;
+	
+	private String presentacion;
 
 	private String foto;
 
@@ -38,6 +42,8 @@ public class AlumnoResponseDTO {
 		id = String.valueOf(alumno.getId());
 		username = alumno.getUsername();
 		email = alumno.getEmail();
+		nombre = alumno.getNombre();
+		presentacion = alumno.getPresentacion();
 		if (alumno.getDni() != null)
 			dni = String.valueOf(alumno.getDni());
 		if (alumno.getFoto() != null)
@@ -80,6 +86,22 @@ public class AlumnoResponseDTO {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getPresentacion() {
+		return presentacion;
+	}
+
+	public void setPresentacion(String presentacion) {
+		this.presentacion = presentacion;
 	}
 
 	public String getFoto() {

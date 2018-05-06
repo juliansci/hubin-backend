@@ -40,6 +40,10 @@ public class Alumno {
 	
 	private String email;
 	
+	private String nombre;
+	
+	private String presentacion;
+	
 	@Lob
 	@Column(length=2097152) //maximo tamaño 2MB
 	private byte[] foto;
@@ -55,15 +59,7 @@ public class Alumno {
 	public Alumno() {
 	}
 	
-	public Alumno(AlumnoRequestDTO alumnoRequestDTO) throws ParseException {	
-		if (alumnoRequestDTO.getDni() != null)
-			dni = Integer.parseInt(alumnoRequestDTO.getDni());
-		if (alumnoRequestDTO.getFechaNac() != null) {
-			DateFormat format = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
-			fechaNac = format.parse(alumnoRequestDTO.getFechaNac());
-		}
-		if (alumnoRequestDTO.getFoto() != null)
-			foto = alumnoRequestDTO.getFoto().getBytes();
+	public Alumno(AlumnoRequestDTO alumnoRequestDTO) throws ParseException {
 		email = alumnoRequestDTO.getEmail();
 		username = alumnoRequestDTO.getUsername();
 		setPassword(alumnoRequestDTO.getPassword());
@@ -111,6 +107,22 @@ public class Alumno {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getPresentacion() {
+		return presentacion;
+	}
+
+	public void setPresentacion(String presentacion) {
+		this.presentacion = presentacion;
 	}
 
 	public byte[] getFoto() {
@@ -181,6 +193,9 @@ public class Alumno {
 	public void update(AlumnoUpdateRequestDTO alumnoUpdateRequestDTO) throws ParseException {
 		setPassword(alumnoUpdateRequestDTO.getPassword());
 		email = alumnoUpdateRequestDTO.getEmail();
+		nombre = alumnoUpdateRequestDTO.getNombre();
+		presentacion = alumnoUpdateRequestDTO.getPresentacion();
+		
 		if (alumnoUpdateRequestDTO.getDni() != null)
 			dni = Integer.parseInt(alumnoUpdateRequestDTO.getDni());
 		if (alumnoUpdateRequestDTO.getFoto() != null)

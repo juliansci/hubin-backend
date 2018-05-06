@@ -7,6 +7,10 @@ public class AlumnoUpdateRequestDTO {
 	private String dni;
 
 	private String email;
+	
+	private String nombre;
+	
+	private String presentacion;
 
 	private String foto;
 
@@ -34,6 +38,22 @@ public class AlumnoUpdateRequestDTO {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getPresentacion() {
+		return presentacion;
+	}
+
+	public void setPresentacion(String presentacion) {
+		this.presentacion = presentacion;
 	}
 
 	public String getFoto() {

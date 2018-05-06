@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import ar.com.fiuba.tpprof.hubin.dto.AlumnoDocumentosResponseDTO;
 import ar.com.fiuba.tpprof.hubin.dto.AlumnoRequestDTO;
 import ar.com.fiuba.tpprof.hubin.dto.AlumnoResponseDTO;
 import ar.com.fiuba.tpprof.hubin.dto.AlumnoUpdateRequestDTO;
@@ -57,6 +58,12 @@ public class AlumnoController {
 	@ResponseBody
 	public AlumnoResponseDTO updateDocumento(@PathVariable("id") int id, @RequestBody AlumnoUpdateRequestDTO alumnoUpdateRequestDTO) throws InvalidAlumnoException {
 		return alumnoService.updateAlumno(id, alumnoUpdateRequestDTO);
+	}
+	
+	@RequestMapping(value="/{id}/documentos", method = RequestMethod.GET)
+	@ResponseBody
+	public AlumnoDocumentosResponseDTO getDocumentos(@PathVariable("id") int id) throws InvalidAlumnoException {
+		return alumnoService.getDocumentos(id);
 	}
 
 }
