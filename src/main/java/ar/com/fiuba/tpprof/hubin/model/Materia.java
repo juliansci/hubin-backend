@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -30,6 +32,12 @@ public class Materia {
 	private String nombre;
 	
 	private String codigo;
+	
+	private boolean destacada;
+	
+	@Lob
+	@Column(length=2097152) //maximo tamaño 2MB
+	private byte[] foto;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "area_id")
@@ -66,6 +74,22 @@ public class Materia {
 
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
+	}
+
+	public boolean isDestacada() {
+		return destacada;
+	}
+
+	public void setDestacada(boolean destacada) {
+		this.destacada = destacada;
+	}
+
+	public byte[] getFoto() {
+		return foto;
+	}
+
+	public void setFoto(byte[] foto) {
+		this.foto = foto;
 	}
 
 	public Area getArea() {

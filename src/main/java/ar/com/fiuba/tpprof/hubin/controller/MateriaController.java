@@ -1,0 +1,29 @@
+package ar.com.fiuba.tpprof.hubin.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import ar.com.fiuba.tpprof.hubin.dto.MateriaResponseDTO;
+import ar.com.fiuba.tpprof.hubin.service.MateriaService;
+
+@Controller
+@CrossOrigin
+@RequestMapping(value = "/materia", consumes = "application/json", produces = "application/json")
+public class MateriaController {
+	
+	@Autowired
+	private MateriaService materiaService;
+	
+	@RequestMapping(value="/destacadas", method = RequestMethod.GET)
+	@ResponseBody
+	public List<MateriaResponseDTO> getAlumno() {
+		return materiaService.getMateriasDestacadas();
+	}
+
+}
