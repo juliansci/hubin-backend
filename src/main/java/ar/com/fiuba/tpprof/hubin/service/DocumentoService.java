@@ -15,12 +15,14 @@ import ar.com.fiuba.tpprof.hubin.dto.VersionResponseDTO;
 import ar.com.fiuba.tpprof.hubin.exception.InvalidDocumentoException;
 import ar.com.fiuba.tpprof.hubin.model.Alumno;
 import ar.com.fiuba.tpprof.hubin.model.Documento;
+import ar.com.fiuba.tpprof.hubin.model.Entidad;
 import ar.com.fiuba.tpprof.hubin.model.Idioma;
 import ar.com.fiuba.tpprof.hubin.model.Materia;
 import ar.com.fiuba.tpprof.hubin.model.Nivel;
 import ar.com.fiuba.tpprof.hubin.model.Version;
 import ar.com.fiuba.tpprof.hubin.repository.AlumnoDao;
 import ar.com.fiuba.tpprof.hubin.repository.DocumentoDao;
+import ar.com.fiuba.tpprof.hubin.repository.EntidadDao;
 import ar.com.fiuba.tpprof.hubin.repository.IdiomaDao;
 import ar.com.fiuba.tpprof.hubin.repository.MateriaDao;
 import ar.com.fiuba.tpprof.hubin.repository.NivelDao;
@@ -36,6 +38,9 @@ public class DocumentoService {
 	
 	@Autowired
 	private MateriaDao materiaDao;
+	
+	@Autowired
+	private EntidadDao entidadDao;
 	
 	@Autowired
 	private IdiomaDao idiomaDao;
@@ -63,6 +68,10 @@ public class DocumentoService {
 		if (materia == null)
 			throw new InvalidDocumentoException("Materia desconocida");
 		
+		Entidad entidad = entidadDao.findOne(Integer.parseInt(documentoRequestDTO.getIdEntidad()));
+		if (entidad == null)
+			throw new InvalidDocumentoException("Entidad desconocida");
+		
 		Idioma idioma = idiomaDao.findOne(Integer.parseInt(documentoRequestDTO.getIdIdioma()));
 		if (idioma == null)
 			throw new InvalidDocumentoException("Idioma desconocido");
@@ -78,6 +87,7 @@ public class DocumentoService {
 		documento.addVersion(version);
 		documento.setCreador(alumno);
 		documento.setMateria(materia);
+		documento.setEntidad(entidad);
 		documento.setIdioma(idioma);
 		documento.setNivel(nivel);
 		
@@ -110,10 +120,26 @@ public class DocumentoService {
 			}
 		}
 		
+		Materia materia = materiaDao.findOne(Integer.parseInt(documentoUpdateRequestDTO.getIdMateria()));
+		if (materia == null)
+			throw new InvalidDocumentoException("Materia desconocida");
+		
+		Entidad entidad = entidadDao.findOne(Integer.parseInt(documentoUpdateRequestDTO.getIdEntidad()));
+		if (entidad == null)
+			throw new InvalidDocumentoException("Entidad desconocida");
+		
 		Idioma idioma = idiomaDao.findOne(Integer.parseInt(documentoUpdateRequestDTO.getIdIdioma()));
-		documento.setIdioma(idioma);
+		if (idioma == null)
+			throw new InvalidDocumentoException("Idioma desconocido");
+		
 		Nivel nivel = nivelDao.findOne(Integer.parseInt(documentoUpdateRequestDTO.getIdNivel()));
+		if (nivel == null)
+			throw new InvalidDocumentoException("Nivel desconocido");
+		
+		documento.setIdioma(idioma);
 		documento.setNivel(nivel);
+		documento.setEntidad(entidad);
+		documento.setMateria(materia);
 		documento.update(documentoUpdateRequestDTO);
 		
 		documentoDao.save(documento);
@@ -167,8 +193,8 @@ public class DocumentoService {
 		throw new InvalidDocumentoException("Version de documento inexistente");
 	}
 
-	public List<DocumentoResponseDTO> getDocumentos(String nombre, String materia, String idioma, String nivel) {	
-		List<Documento> documentos = documentoDao.buscarDocumentos(nombre, materia, idioma, nivel);
+	public List<DocumentoResponseDTO> getDocumentos(String nombre, String entidad, String materia, String idioma, String nivel) {	
+		List<Documento> documentos = documentoDao.buscarDocumentos(nombre, entidad, materia, idioma, nivel);
 		List<DocumentoResponseDTO> documentosResponse = new ArrayList<DocumentoResponseDTO>();
 		for (Documento documento : documentos) {
 			documentosResponse.add(new DocumentoResponseDTO(documento));

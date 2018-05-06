@@ -1,21 +1,10 @@
 package ar.com.fiuba.tpprof.hubin.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "entidad")
@@ -38,11 +27,6 @@ public class Entidad {
 	private String email;
 
 	private boolean activa;
-
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "entidad", cascade = CascadeType.ALL, orphanRemoval=true)
-	@Fetch(FetchMode.SELECT)
-	@JsonManagedReference
-	private List<Area> areas = new ArrayList<Area>();
 
 	public Entidad() {
 	}
@@ -109,18 +93,6 @@ public class Entidad {
 
 	public void setActiva(boolean activa) {
 		this.activa = activa;
-	}
-
-	public List<Area> getAreas() {
-		return areas;
-	}
-
-	public void setAreas(List<Area> areas) {
-		this.areas = areas;
-	}
-	
-	public void addArea(Area area) {
-		areas.add(area);
 	}
 
 }

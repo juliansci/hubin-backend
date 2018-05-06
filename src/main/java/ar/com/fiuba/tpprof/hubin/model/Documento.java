@@ -56,6 +56,10 @@ public class Documento {
 	private Materia materia;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "entidad_id")
+	private Entidad entidad;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "alumno_id")
 	private Alumno creador;
 	
@@ -162,6 +166,14 @@ public class Documento {
 
 	public void setMateria(Materia materia) {
 		this.materia = materia;
+	}
+
+	public Entidad getEntidad() {
+		return entidad;
+	}
+
+	public void setEntidad(Entidad entidad) {
+		this.entidad = entidad;
 	}
 
 	public Alumno getCreador() {

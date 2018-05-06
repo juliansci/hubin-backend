@@ -15,6 +15,10 @@ public class DocumentoUpdateRequestDTO {
 	
 	private boolean publico;
 	
+	private String idMateria;
+	
+	private String idEntidad;
+	
 	private String idIdioma;
 	
 	private String idNivel;
@@ -61,6 +65,22 @@ public class DocumentoUpdateRequestDTO {
 		this.publico = publico;
 	}
 
+	public String getIdMateria() {
+		return idMateria;
+	}
+
+	public void setIdMateria(String idMateria) {
+		this.idMateria = idMateria;
+	}
+
+	public String getIdEntidad() {
+		return idEntidad;
+	}
+
+	public void setIdEntidad(String idEntidad) {
+		this.idEntidad = idEntidad;
+	}
+
 	public String getIdIdioma() {
 		return idIdioma;
 	}
@@ -90,7 +110,7 @@ public class DocumentoUpdateRequestDTO {
 	}
 
 	public boolean isValid() {
-		return (!nombre.isEmpty() && !extension.isEmpty() && !idIdioma.isEmpty() && !idNivel.isEmpty());
+		return (!nombre.isEmpty() && !extension.isEmpty() && !idIdioma.isEmpty() && !idNivel.isEmpty() && !idEntidad.isEmpty() && !idMateria.isEmpty());
 	}
 
 }

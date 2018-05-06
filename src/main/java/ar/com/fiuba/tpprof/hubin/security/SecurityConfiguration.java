@@ -28,7 +28,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 		.antMatchers(HttpMethod.POST, "/alumno/").permitAll()
-		.antMatchers("/admin/login", "/admin/logout", "/entidad", "/entidad/**", "/proveedor", "/prveedor/**").hasRole("ADMIN")
+		//.antMatchers("/entidad", "/entidad/**", "/proveedor", "/proveedor/**").hasRole("ADMIN")
 		.anyRequest().authenticated().and().
 		httpBasic().and().
 	    csrf().disable().addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class);

@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import ar.com.fiuba.tpprof.hubin.model.Area;
 import ar.com.fiuba.tpprof.hubin.model.Documento;
 import ar.com.fiuba.tpprof.hubin.model.Materia;
 
@@ -21,10 +20,6 @@ public class MateriaResponseDTO {
 
 	private String foto;
 
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "nombre")
-	@JsonIdentityReference(alwaysAsId = true)
-	private Area area;
-
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = true)
 	private List<Documento> documentos;
@@ -35,7 +30,6 @@ public class MateriaResponseDTO {
 		code = materia.getCode();
 		if (materia.getFoto() != null)
 			foto = new String(materia.getFoto());
-		area = materia.getArea();
 		documentos = new ArrayList<Documento>(materia.getDocumentos()); 
 	}
 
@@ -69,14 +63,6 @@ public class MateriaResponseDTO {
 
 	public void setFoto(String foto) {
 		this.foto = foto;
-	}
-
-	public Area getArea() {
-		return area;
-	}
-
-	public void setArea(Area area) {
-		this.area = area;
 	}
 
 	public List<Documento> getDocumentos() {

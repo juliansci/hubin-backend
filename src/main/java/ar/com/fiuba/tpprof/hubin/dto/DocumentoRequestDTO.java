@@ -21,6 +21,8 @@ public class DocumentoRequestDTO {
 	private String idMateria;
 	
 	private String idCreador;
+	
+	private String idEntidad;
 
 	public String getNombre() {
 		return nombre;
@@ -102,8 +104,16 @@ public class DocumentoRequestDTO {
 		this.idCreador = idCreador;
 	}
 	
+	public String getIdEntidad() {
+		return idEntidad;
+	}
+
+	public void setIdEntidad(String idEntidad) {
+		this.idEntidad = idEntidad;
+	}
+
 	public boolean isValid() {
-		return (!nombre.isEmpty() && !extension.isEmpty() && !fechaUltModificacion.isEmpty() && !data.isEmpty() && !idIdioma.isEmpty() && !idNivel.isEmpty() && !idMateria.isEmpty() && !idCreador.isEmpty());
+		return (!nombre.isEmpty() && !extension.isEmpty() && !fechaUltModificacion.isEmpty() && !data.isEmpty() && !idIdioma.isEmpty() && !idNivel.isEmpty() && !idMateria.isEmpty() && !idCreador.isEmpty() && !idEntidad.isEmpty());
 	}
 
 }

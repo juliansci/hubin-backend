@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import ar.com.fiuba.tpprof.hubin.model.Alumno;
 import ar.com.fiuba.tpprof.hubin.model.Documento;
+import ar.com.fiuba.tpprof.hubin.model.Entidad;
 import ar.com.fiuba.tpprof.hubin.model.Idioma;
 import ar.com.fiuba.tpprof.hubin.model.Materia;
 import ar.com.fiuba.tpprof.hubin.model.Nivel;
@@ -40,9 +41,13 @@ public class DocumentoResponseDTO {
 	@JsonIdentityReference(alwaysAsId = true)
 	private Nivel nivel;
 	
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "nombre")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "code")
 	@JsonIdentityReference(alwaysAsId = true)
 	private Materia materia;
+	
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "code")
+	@JsonIdentityReference(alwaysAsId = true)
+	private Entidad entidad;
 	
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = true)
@@ -66,6 +71,7 @@ public class DocumentoResponseDTO {
 		idioma = documento.getIdioma();
 		nivel = documento.getNivel();
 		materia = documento.getMateria();
+		entidad = documento.getEntidad();
 		creador = documento.getCreador();
 		versiones = documento.getVersiones();
 	}
@@ -148,6 +154,14 @@ public class DocumentoResponseDTO {
 
 	public void setMateria(Materia materia) {
 		this.materia = materia;
+	}
+
+	public Entidad getEntidad() {
+		return entidad;
+	}
+
+	public void setEntidad(Entidad entidad) {
+		this.entidad = entidad;
 	}
 
 	public Alumno getCreador() {
