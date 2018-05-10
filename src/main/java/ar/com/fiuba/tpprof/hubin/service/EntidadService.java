@@ -17,7 +17,5 @@ public class EntidadService {
 	public List<Entidad> getAllEntidades() {
 		return (List<Entidad>) entidadDao.findAll();
 	}
-	
-	
 
 }

@@ -22,8 +22,14 @@ public class MateriaController {
 	
 	@RequestMapping(value="/destacadas", method = RequestMethod.GET)
 	@ResponseBody
-	public List<MateriaResponseDTO> getAlumno() {
+	public List<MateriaResponseDTO> getMateriasDestacadas() {
 		return materiaService.getMateriasDestacadas();
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	@ResponseBody
+	public List<MateriaResponseDTO> getAllMaterias() {
+		return materiaService.getAllMaterias();
 	}
 
 }

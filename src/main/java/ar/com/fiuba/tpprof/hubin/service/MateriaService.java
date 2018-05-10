@@ -25,4 +25,13 @@ public class MateriaService {
 		return materiasDestacadasResponseDTO;
 	}
 
+	public List<MateriaResponseDTO> getAllMaterias() {
+		List<Materia> materias = (List<Materia>) materiaDao.findAll();
+		List<MateriaResponseDTO> materiasDTO = new ArrayList<MateriaResponseDTO>();
+		for (Materia materia : materias) {
+			materiasDTO.add(new MateriaResponseDTO(materia));
+		}
+		return materiasDTO;
+	}
+
 }
