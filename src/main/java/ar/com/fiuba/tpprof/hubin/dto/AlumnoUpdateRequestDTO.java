@@ -71,9 +71,5 @@ public class AlumnoUpdateRequestDTO {
 	public void setFechaNac(String fechaNac) {
 		this.fechaNac = fechaNac;
 	}
-	
-	public boolean isValid() {
-		return (!password.isEmpty());
-	}
 
 }

@@ -191,11 +191,14 @@ public class Alumno {
 	}
 
 	public void update(AlumnoUpdateRequestDTO alumnoUpdateRequestDTO) throws ParseException {
-		setPassword(alumnoUpdateRequestDTO.getPassword());
-		email = alumnoUpdateRequestDTO.getEmail();
-		nombre = alumnoUpdateRequestDTO.getNombre();
-		presentacion = alumnoUpdateRequestDTO.getPresentacion();
-		
+		if (alumnoUpdateRequestDTO.getPassword() != null)
+			setPassword(alumnoUpdateRequestDTO.getPassword());
+		if (alumnoUpdateRequestDTO.getEmail() != null)
+			email = alumnoUpdateRequestDTO.getEmail();
+		if (alumnoUpdateRequestDTO.getNombre() != null)
+			nombre = alumnoUpdateRequestDTO.getNombre();
+		if (alumnoUpdateRequestDTO.getPresentacion() != null)
+			presentacion = alumnoUpdateRequestDTO.getPresentacion();		
 		if (alumnoUpdateRequestDTO.getDni() != null)
 			dni = Integer.parseInt(alumnoUpdateRequestDTO.getDni());
 		if (alumnoUpdateRequestDTO.getFoto() != null)

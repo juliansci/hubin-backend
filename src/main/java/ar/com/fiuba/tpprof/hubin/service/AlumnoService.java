@@ -39,7 +39,7 @@ public class AlumnoService {
 	public AlumnoResponseDTO getAlumno(String username) throws InvalidAlumnoException {
 		Alumno alumno = alumnoDao.findByUsername(username);
 		if (alumno == null) {
-			throw new InvalidAlumnoException("El nombre de usuario no existe");
+			throw new InvalidAlumnoException("El usuario no existe");
 		}
 		return new AlumnoResponseDTO(alumno);
 	}
@@ -47,17 +47,15 @@ public class AlumnoService {
 	public AlumnoResponseDTO getAlumno(int id) throws InvalidAlumnoException {
 		Alumno alumno = alumnoDao.findOne(id);
 		if (alumno == null) {
-			throw new InvalidAlumnoException("El nombre de usuario no existe");
+			throw new InvalidAlumnoException("El usuario no existe");
 		}
 		return new AlumnoResponseDTO(alumno);
 	}
 
 	public AlumnoResponseDTO updateAlumno(int id, AlumnoUpdateRequestDTO alumnoUpdateRequestDTO) throws InvalidAlumnoException {
-		if (!alumnoUpdateRequestDTO.isValid())
-			throw new InvalidAlumnoException("Datos incompletos");		
 		Alumno alumno = alumnoDao.findOne(id);
 		if (alumno == null) {
-			throw new InvalidAlumnoException("El nombre de usuario no existe");
+			throw new InvalidAlumnoException("El usuario no existe");
 		}		
 		try {
 			alumno.update(alumnoUpdateRequestDTO);
@@ -71,7 +69,7 @@ public class AlumnoService {
 	public AlumnoDocumentosResponseDTO getDocumentos(int id) throws InvalidAlumnoException {
 		Alumno alumno = alumnoDao.findOne(id);
 		if (alumno == null) {
-			throw new InvalidAlumnoException("El nombre de usuario no existe");
+			throw new InvalidAlumnoException("El usuario no existe");
 		}		
 		return new AlumnoDocumentosResponseDTO(alumno);
 	}
