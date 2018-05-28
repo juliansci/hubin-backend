@@ -87,9 +87,7 @@ public class AlumnoService {
             if (!DocumentUtil.isAJPG(profileImage.getOriginalFilename())) {
                 throw new InvalidAlumnoException("Imagen no es jpg");
             }
-            System.out.println(profileImage.getSize());
             Long maxSize = 2000000L;
-            System.out.println(maxSize);
             if (profileImage.getSize() > maxSize) {
                 throw new InvalidAlumnoException("Imagen pesa mas de 2mb es jpg");
             }
