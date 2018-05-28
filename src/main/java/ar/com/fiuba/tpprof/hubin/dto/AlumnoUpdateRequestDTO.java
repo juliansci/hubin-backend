@@ -12,7 +12,7 @@ public class AlumnoUpdateRequestDTO {
 	
 	private String presentacion;
 
-	private String foto;
+	//private String foto;
 
 	private String fechaNac;
 
@@ -56,13 +56,13 @@ public class AlumnoUpdateRequestDTO {
 		this.presentacion = presentacion;
 	}
 
-	public String getFoto() {
+	/*public String getFoto() {
 		return foto;
 	}
 
 	public void setFoto(String foto) {
 		this.foto = foto;
-	}
+	}*/
 
 	public String getFechaNac() {
 		return fechaNac;

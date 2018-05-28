@@ -21,26 +21,26 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name = "materia")
 public class Materia {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	private String nombre;
-	
+
 	private String code;
-	
+
 	private boolean destacada;
-	
+
 	@Lob
 	@Column(length=2097152) //maximo tamaño 2MB
 	private byte[] foto;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "materia", cascade = CascadeType.ALL, orphanRemoval=true)
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = true)
 	private List<Documento> documentos = new ArrayList<Documento>();
-	
+
 	public Materia() {
 	}
 
@@ -91,7 +91,7 @@ public class Materia {
 	public void setDocumentos(List<Documento> documentos) {
 		this.documentos = documentos;
 	}
-	
+
 	public void addDocumento(Documento documento) {
 		documentos.add(documento);
 	}
