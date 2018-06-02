@@ -12,10 +12,10 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import ar.com.fiuba.tpprof.hubin.model.Alumno;
 import ar.com.fiuba.tpprof.hubin.model.Documento;
 import ar.com.fiuba.tpprof.hubin.model.Entidad;
+import ar.com.fiuba.tpprof.hubin.model.File;
 import ar.com.fiuba.tpprof.hubin.model.Idioma;
 import ar.com.fiuba.tpprof.hubin.model.Materia;
 import ar.com.fiuba.tpprof.hubin.model.Nivel;
-import ar.com.fiuba.tpprof.hubin.model.Version;
 
 public class DocumentoResponseDTO {
 	
@@ -55,7 +55,11 @@ public class DocumentoResponseDTO {
 
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = true)
-	private List<Version> versiones = new ArrayList<Version>();
+	private List<File> versiones = new ArrayList<File>();
+	
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = true)
+	private List<Alumno> compartidos = new ArrayList<Alumno>();
 
 	public DocumentoResponseDTO(Documento documento) {		
 		id = String.valueOf(documento.getId());
@@ -74,6 +78,7 @@ public class DocumentoResponseDTO {
 		entidad = documento.getEntidad();
 		creador = documento.getCreador();
 		versiones = documento.getVersiones();
+		compartidos = documento.getCompartidos();
 	}
 
 	public String getId() {
@@ -172,12 +177,20 @@ public class DocumentoResponseDTO {
 		this.creador = creador;
 	}
 
-	public List<Version> getVersiones() {
+	public List<File> getVersiones() {
 		return versiones;
 	}
 
-	public void setVersiones(List<Version> versiones) {
+	public void setVersiones(List<File> versiones) {
 		this.versiones = versiones;
+	}
+
+	public List<Alumno> getCompartidos() {
+		return compartidos;
+	}
+
+	public void setCompartidos(List<Alumno> compartidos) {
+		this.compartidos = compartidos;
 	}
 
 }

@@ -16,8 +16,6 @@ public class DocumentoRequestDTO {
 	
 	private String idNivel;
 	
-	private String data;
-	
 	private String idMateria;
 	
 	private String idCreador;
@@ -80,14 +78,6 @@ public class DocumentoRequestDTO {
 		this.idNivel = idNivel;
 	}
 
-	public String getData() {
-		return data;
-	}
-
-	public void setData(String data) {
-		this.data = data;
-	}
-
 	public String getIdMateria() {
 		return idMateria;
 	}
@@ -113,7 +103,7 @@ public class DocumentoRequestDTO {
 	}
 
 	public boolean isValid() {
-		return (!nombre.isEmpty() && !extension.isEmpty() && !fechaUltModificacion.isEmpty() && !data.isEmpty() && !idIdioma.isEmpty() && !idNivel.isEmpty() && !idMateria.isEmpty() && !idCreador.isEmpty() && !idEntidad.isEmpty());
+		return (!nombre.isEmpty() && !extension.isEmpty() && !fechaUltModificacion.isEmpty() && !idIdioma.isEmpty() && !idNivel.isEmpty() && !idMateria.isEmpty() && !idCreador.isEmpty() && !idEntidad.isEmpty());
 	}
 
 }

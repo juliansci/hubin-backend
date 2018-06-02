@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -63,8 +62,9 @@ public class Documento {
 	@JoinColumn(name = "alumno_id")
 	private Alumno creador;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "documento", cascade = CascadeType.ALL, orphanRemoval=true)
-	private List<Version> versiones = new ArrayList<Version>();	
+	@OneToMany(fetch = FetchType.EAGER, cascade = {javax.persistence.CascadeType.MERGE})
+	@JoinTable(name="version", joinColumns=@JoinColumn(name="documento_id", referencedColumnName="id"), inverseJoinColumns=@JoinColumn(name="file_id", referencedColumnName="id"))
+	private List<File> versiones = new ArrayList<File>();	
 	
 	@ManyToMany
 	@JoinTable(name="compartido", joinColumns=@JoinColumn(name="documento_id", referencedColumnName="id"), inverseJoinColumns=@JoinColumn(name="alumno_id", referencedColumnName="id"))
@@ -184,15 +184,15 @@ public class Documento {
 		this.creador = creador;
 	}
 
-	public List<Version> getVersiones() {
+	public List<File> getVersiones() {
 		return versiones;
 	}
 
-	public void setVersiones(List<Version> versiones) {
+	public void setVersiones(List<File> versiones) {
 		this.versiones = versiones;
 	}
 	
-	public void addVersion(Version version) {
+	public void addVersion(File version) {
 		versiones.add(version);
 	}
 

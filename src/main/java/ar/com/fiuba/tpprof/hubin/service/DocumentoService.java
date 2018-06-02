@@ -6,20 +6,20 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import ar.com.fiuba.tpprof.hubin.dto.DocumentoRequestDTO;
 import ar.com.fiuba.tpprof.hubin.dto.DocumentoResponseDTO;
-import ar.com.fiuba.tpprof.hubin.dto.DocumentoUpdateDataRequestDTO;
 import ar.com.fiuba.tpprof.hubin.dto.DocumentoUpdateRequestDTO;
-import ar.com.fiuba.tpprof.hubin.dto.VersionResponseDTO;
+import ar.com.fiuba.tpprof.hubin.dto.FileResponseDTO;
 import ar.com.fiuba.tpprof.hubin.exception.InvalidDocumentoException;
 import ar.com.fiuba.tpprof.hubin.model.Alumno;
 import ar.com.fiuba.tpprof.hubin.model.Documento;
 import ar.com.fiuba.tpprof.hubin.model.Entidad;
+import ar.com.fiuba.tpprof.hubin.model.File;
 import ar.com.fiuba.tpprof.hubin.model.Idioma;
 import ar.com.fiuba.tpprof.hubin.model.Materia;
 import ar.com.fiuba.tpprof.hubin.model.Nivel;
-import ar.com.fiuba.tpprof.hubin.model.Version;
 import ar.com.fiuba.tpprof.hubin.repository.AlumnoDao;
 import ar.com.fiuba.tpprof.hubin.repository.DocumentoDao;
 import ar.com.fiuba.tpprof.hubin.repository.EntidadDao;
@@ -80,11 +80,6 @@ public class DocumentoService {
 		if (nivel == null)
 			throw new InvalidDocumentoException("Nivel desconocido");
 		
-		Version version = new Version();
-		version.setData(documentoRequestDTO.getData().getBytes());
-		version.setDocumento(documento);
-		
-		documento.addVersion(version);
 		documento.setCreador(alumno);
 		documento.setMateria(materia);
 		documento.setEntidad(entidad);
@@ -147,28 +142,29 @@ public class DocumentoService {
 		return new DocumentoResponseDTO(documento);
 	}
 
-	public DocumentoResponseDTO updateDocumento(int id, DocumentoUpdateDataRequestDTO documentoUpdateDataRequestDTO) throws InvalidDocumentoException {
-		
-		if (!documentoUpdateDataRequestDTO.isValid())
-			throw new InvalidDocumentoException("Datos incompletos");
+	public DocumentoResponseDTO crearVersion(int id, MultipartFile file) throws InvalidDocumentoException {
 		
 		Documento documento = documentoDao.findOne(id);
 		if (documento == null)
 			throw new InvalidDocumentoException("Documento inexistente");
 		
-		try {
-			documento.setFechaUltModificacion(documentoUpdateDataRequestDTO.getFechaUltModificacion());
-		} catch (ParseException e) {
-			throw new InvalidDocumentoException("Formato de fecha incorrecto");
-		}
-		
-		Version version = new Version();
-		version.setData(documentoUpdateDataRequestDTO.getData().getBytes());
-		version.setDocumento(documento);
-		
-		documento.addVersion(version);
-		
-		documentoDao.save(documento);
+		if (file.getSize() > 0) {
+            Long maxSize = 10000000L;
+            if (file.getSize() > maxSize) {
+                throw new InvalidDocumentoException("Imagen jpg pesa mas de 10mb");
+            }
+            String[] filenameSplit = file.getOriginalFilename().split("\\.");
+            String extension = filenameSplit[filenameSplit.length - 1];
+            try {
+                File version = new File();
+                version.setExtension(extension);
+                version.setData(file.getBytes());
+                documento.addVersion(version);
+                documentoDao.save(documento);
+            } catch (Exception e) {
+                throw new InvalidDocumentoException("Error en procesamiento de archivo");
+            }
+        }
 		
 		return new DocumentoResponseDTO(documento);
 	}
@@ -180,14 +176,14 @@ public class DocumentoService {
 		return new DocumentoResponseDTO(documento);
 	}
 
-	public VersionResponseDTO getDocumento(int idDocumento, int idVersion) throws InvalidDocumentoException {		
+	public FileResponseDTO getDocumento(int idDocumento, int idVersion) throws InvalidDocumentoException {		
 		Documento documento = documentoDao.findOne(idDocumento);
 		if (documento == null)
 			throw new InvalidDocumentoException("Documento inexistente");
-		List<Version> versiones = documento.getVersiones();
-		for (Version version : versiones) {
+		List<File> versiones = documento.getVersiones();
+		for (File version : versiones) {
 			if (version.getId().equals(idVersion)) {
-				return new VersionResponseDTO(version);
+				return new FileResponseDTO(version);
 			}
 		}
 		throw new InvalidDocumentoException("Version de documento inexistente");
