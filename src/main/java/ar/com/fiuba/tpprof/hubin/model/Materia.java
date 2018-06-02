@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -32,9 +32,9 @@ public class Materia {
 
 	private boolean destacada;
 
-	@Lob
-	@Column(length=2097152) //maximo tamaño 2MB
-	private byte[] foto;
+    @OneToOne(fetch = FetchType.EAGER, cascade = {javax.persistence.CascadeType.MERGE})
+    @JoinColumn(name = "foto")
+    private File foto;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "materia", cascade = CascadeType.ALL, orphanRemoval=true)
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -76,13 +76,13 @@ public class Materia {
 		this.destacada = destacada;
 	}
 
-	public byte[] getFoto() {
-		return foto;
-	}
+    public File getFoto() {
+        return foto;
+    }
 
-	public void setFoto(byte[] foto) {
-		this.foto = foto;
-	}
+    public void setFoto(File foto) {
+        this.foto = foto;
+    }
 
 	public List<Documento> getDocumentos() {
 		return documentos;

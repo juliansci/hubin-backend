@@ -15,8 +15,6 @@ import ar.com.fiuba.tpprof.hubin.exception.InvalidAlumnoException;
 import ar.com.fiuba.tpprof.hubin.service.AlumnoService;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Controller
 @CrossOrigin
 @RequestMapping(value = "/alumno", consumes = "application/json", produces = "application/json")

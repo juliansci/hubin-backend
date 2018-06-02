@@ -1,7 +1,6 @@
 package ar.com.fiuba.tpprof.hubin.service;
 
 import java.text.ParseException;
-import java.util.Base64;
 
 import ar.com.fiuba.tpprof.hubin.model.File;
 import ar.com.fiuba.tpprof.hubin.util.DocumentUtil;
@@ -89,7 +88,7 @@ public class AlumnoService {
             }
             Long maxSize = 2000000L;
             if (profileImage.getSize() > maxSize) {
-                throw new InvalidAlumnoException("Imagen pesa mas de 2mb es jpg");
+                throw new InvalidAlumnoException("Imagen jpg pesa mas de 2mb");
             }
             String[] filenameSplit = profileImage.getOriginalFilename().split("\\.");
             String extension = filenameSplit[filenameSplit.length - 1];
@@ -105,7 +104,7 @@ public class AlumnoService {
                 alumno.setFoto(foto);
                 alumnoDao.save(alumno);
             } catch (Exception e) {
-                throw new InvalidAlumnoException("Erro en procesamiento de imagen");
+                throw new InvalidAlumnoException("Error en procesamiento de imagen");
             }
         }
         return new AlumnoResponseDTO(alumno);

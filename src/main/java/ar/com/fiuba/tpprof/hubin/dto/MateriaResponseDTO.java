@@ -1,7 +1,6 @@
 package ar.com.fiuba.tpprof.hubin.dto;
 
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -19,7 +18,7 @@ public class MateriaResponseDTO {
 
     private String code;
 
-    private String foto;
+    private FileResponseDTO foto;
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
@@ -30,7 +29,7 @@ public class MateriaResponseDTO {
         nombre = materia.getNombre();
         code = materia.getCode();
         if (materia.getFoto() != null) {
-            foto = Base64.getEncoder().encodeToString(materia.getFoto());
+        	foto = new FileResponseDTO(materia.getFoto());
         }
         documentos = new ArrayList<Documento>(materia.getDocumentos());
     }
@@ -59,11 +58,11 @@ public class MateriaResponseDTO {
         this.code = code;
     }
 
-    public String getFoto() {
+    public FileResponseDTO getFoto() {
         return foto;
     }
 
-    public void setFoto(String foto) {
+    public void setFoto(FileResponseDTO foto) {
         this.foto = foto;
     }
 
