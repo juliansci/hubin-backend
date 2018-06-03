@@ -33,7 +33,7 @@ public class Materia {
 	private boolean destacada;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = {javax.persistence.CascadeType.MERGE})
-    @JoinColumn(name = "foto")
+    @JoinColumn(name = "foto_id")
     private File foto;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "materia", cascade = CascadeType.ALL, orphanRemoval=true)
