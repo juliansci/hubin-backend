@@ -31,6 +31,8 @@ public class DocumentoResponseDTO {
 	
 	private boolean publico;
 	
+	private String fechaCreacion;
+	
 	private String fechaUltModificacion;
 	
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -68,6 +70,10 @@ public class DocumentoResponseDTO {
 		descripcion = documento.getDescripcion();
 		eliminado = documento.isEliminado();
 		publico = documento.isPublico();
+		if (documento.getFechaCreacion() != null) {
+			DateFormat format = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
+			fechaCreacion = format.format(documento.getFechaCreacion());
+		}
 		if (documento.getFechaUltModificacion() != null) {
 			DateFormat format = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
 			fechaUltModificacion = format.format(documento.getFechaUltModificacion());
@@ -127,6 +133,14 @@ public class DocumentoResponseDTO {
 
 	public void setPublico(boolean publico) {
 		this.publico = publico;
+	}
+	
+	public String getFechaCreacion() {
+		return fechaCreacion;
+	}
+
+	public void setFechaCreacion(String fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
 	}
 
 	public String getFechaUltModificacion() {

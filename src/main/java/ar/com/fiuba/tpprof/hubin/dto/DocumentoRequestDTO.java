@@ -10,6 +10,8 @@ public class DocumentoRequestDTO {
 	
 	private boolean publico;
 	
+	private String fechaCreacion;
+	
 	private String fechaUltModificacion;
 	
 	private String idIdioma;
@@ -52,6 +54,14 @@ public class DocumentoRequestDTO {
 
 	public void setPublico(boolean publico) {
 		this.publico = publico;
+	}
+	
+	public String getFechaCreacion() {
+		return fechaCreacion;
+	}
+
+	public void setFechaCreacion(String fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
 	}
 
 	public String getFechaUltModificacion() {
@@ -103,7 +113,7 @@ public class DocumentoRequestDTO {
 	}
 
 	public boolean isValid() {
-		return (!nombre.isEmpty() && !extension.isEmpty() && !fechaUltModificacion.isEmpty() && !idIdioma.isEmpty() && !idNivel.isEmpty() && !idMateria.isEmpty() && !idCreador.isEmpty() && !idEntidad.isEmpty());
+		return (!nombre.isEmpty() && !extension.isEmpty() && !fechaCreacion.isEmpty() && !fechaUltModificacion.isEmpty() && !idIdioma.isEmpty() && !idNivel.isEmpty() && !idMateria.isEmpty() && !idCreador.isEmpty() && !idEntidad.isEmpty());
 	}
 
 }

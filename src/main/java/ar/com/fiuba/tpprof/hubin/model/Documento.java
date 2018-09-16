@@ -40,6 +40,8 @@ public class Documento {
 	
 	private boolean publico;
 	
+	private Date fechaCreacion;
+	
 	private Date fechaUltModificacion;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -80,6 +82,7 @@ public class Documento {
 		this.eliminado = false;
 		this.publico = documentoRequestDTO.isPublico();		
 		DateFormat format = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
+		this.fechaCreacion = format.parse(documentoRequestDTO.getFechaCreacion());
 		this.fechaUltModificacion = format.parse(documentoRequestDTO.getFechaUltModificacion());
 	}
 
@@ -129,6 +132,19 @@ public class Documento {
 
 	public void setPublico(boolean publico) {
 		this.publico = publico;
+	}
+	
+	public Date getFechaCreacion() {
+		return fechaCreacion;
+	}
+
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
+	}
+	
+	public void setFechaCreacion(String fechaCreacion) throws ParseException {
+		DateFormat format = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
+		this.fechaCreacion = format.parse(fechaCreacion);		
 	}
 
 	public Date getFechaUltModificacion() {
