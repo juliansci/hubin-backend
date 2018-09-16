@@ -33,19 +33,19 @@ public class DocumentoResponseDTO {
 	
 	private String fechaUltModificacion;
 	
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "code")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = true)
 	private Idioma idioma;
 	
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "code")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = true)
 	private Nivel nivel;
 	
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "code")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = true)
 	private Materia materia;
 	
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "code")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = true)
 	private Entidad entidad;
 	
