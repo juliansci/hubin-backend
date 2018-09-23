@@ -189,8 +189,13 @@ public class DocumentoService {
 		throw new InvalidDocumentoException("Version de documento inexistente");
 	}
 
-	public List<DocumentoResponseDTO> getDocumentos(String nombre, String entidad, String materia, String idioma, String nivel) {	
-		List<Documento> documentos = documentoDao.buscarDocumentos(nombre, entidad, materia, idioma, nivel);
+	public List<DocumentoResponseDTO> getDocumentos(String nombre, List<Integer> idEntidad, List<Integer> idMateria, List<Integer> idIdioma, List<Integer> idNivel) {	
+		List<Documento> documentos = documentoDao.buscarDocumentos(
+				nombre, 
+				idEntidad == null ? null : true, idEntidad,
+				idMateria == null ? null : true, idMateria, 
+				idIdioma == null ? null : true, idIdioma,
+				idNivel == null ? null : true, idNivel);
 		List<DocumentoResponseDTO> documentosResponse = new ArrayList<DocumentoResponseDTO>();
 		for (Documento documento : documentos) {
 			documentosResponse.add(new DocumentoResponseDTO(documento));
