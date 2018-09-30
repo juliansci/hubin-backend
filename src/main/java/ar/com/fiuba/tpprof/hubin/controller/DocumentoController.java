@@ -60,11 +60,11 @@ public class DocumentoController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	public List<DocumentoResponseDTO> getDocumentos(@RequestParam(value = "nombre", required = false) String nombre,
-			@RequestParam(value = "idEntidad", required = false) List<Integer> idEntidad,
-			@RequestParam(value = "idMateria", required = false) List<Integer> idMateria,
-			@RequestParam(value = "idIdioma", required = false) List<Integer> idIdioma,
-			@RequestParam(value = "idNivel", required = false) List<Integer> idNivel) throws InvalidDocumentoException {
+	public List<DocumentoResponseDTO> getDocumentos(@RequestParam(value = "name", required = false) String nombre,
+			@RequestParam(value = "entity", required = false) List<Integer> idEntidad,
+			@RequestParam(value = "subject", required = false) List<Integer> idMateria,
+			@RequestParam(value = "language", required = false) List<Integer> idIdioma,
+			@RequestParam(value = "level", required = false) List<Integer> idNivel) throws InvalidDocumentoException {
 		return documentoService.getDocumentos(nombre, idEntidad, idMateria, idIdioma, idNivel);
 	}
 

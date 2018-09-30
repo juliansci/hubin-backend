@@ -5,3 +5,4 @@ target/
 .classpath
 .project
 nb-configuration.xml
+src/main/resources/images/migrateFiles.sh
