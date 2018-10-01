@@ -32,10 +32,10 @@ VALUES
 
 insert into materia (id, code, destacada, foto_id, nombre)
 VALUES
-(1, 'biology', 1, 2, 'Biologia'),
-(2, 'computer', 1, 3, 'Computacion'),
-(3, 'economy', 1, 4, 'Economia'),
-(4, 'engineering', 1, 5, 'Ingenieria'),
+(1, 'biology', 1, 2, 'Biología'),
+(2, 'computer', 1, 3, 'Computación'),
+(3, 'economy', 1, 4, 'Economía'),
+(4, 'engineering', 1, 5, 'Ingeniería'),
 (5, 'finance', 1, 6, 'Finanzas'),
 (6, 'history', 1, 7, 'Historia'),
 (7, 'language', 1, 8, 'Idiomas'),
