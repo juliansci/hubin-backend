@@ -59,12 +59,16 @@ public class AlumnoService {
         Alumno alumno = alumnoDao.findOne(id);
         if (alumno == null) {
             throw new InvalidAlumnoException("El usuario no existe");
-        }
-        try {
-            alumno.update(alumnoUpdateRequestDTO);
-        } catch (ParseException e) {
-            throw new InvalidAlumnoException("Formato de fecha incorrecto");
-        }
+        }        
+		String username = alumnoUpdateRequestDTO.getUsername();
+		if (username != null && alumnoDao.findByUsername(username) != null) {
+			throw new InvalidAlumnoException("El nombre de usuario ya existe");
+		}
+		try {
+			alumno.update(alumnoUpdateRequestDTO);
+		} catch (ParseException e) {
+			throw new InvalidAlumnoException("Formato de fecha incorrecto");
+		}
         alumnoDao.save(alumno);
         return new AlumnoResponseDTO(alumno);
     }

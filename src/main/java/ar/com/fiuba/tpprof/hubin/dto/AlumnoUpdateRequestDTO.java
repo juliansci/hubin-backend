@@ -2,6 +2,8 @@ package ar.com.fiuba.tpprof.hubin.dto;
 
 public class AlumnoUpdateRequestDTO {
 	
+	private String username;
+	
 	private String password;
 
 	private String dni;
@@ -15,6 +17,14 @@ public class AlumnoUpdateRequestDTO {
 	//private String foto;
 
 	private String fechaNac;
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 	public String getPassword() {
 		return password;

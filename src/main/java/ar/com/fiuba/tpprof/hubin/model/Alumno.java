@@ -181,6 +181,8 @@ public class Alumno {
     }
 
     public void update(AlumnoUpdateRequestDTO alumnoUpdateRequestDTO) throws ParseException {
+    	if (alumnoUpdateRequestDTO.getUsername() != null)
+    		username = alumnoUpdateRequestDTO.getUsername();
         if (alumnoUpdateRequestDTO.getPassword() != null)
             setPassword(alumnoUpdateRequestDTO.getPassword());
         if (alumnoUpdateRequestDTO.getEmail() != null)
