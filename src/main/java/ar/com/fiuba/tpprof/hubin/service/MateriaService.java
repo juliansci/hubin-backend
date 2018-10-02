@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.com.fiuba.tpprof.hubin.dto.MateriaResponseDTO;
+import ar.com.fiuba.tpprof.hubin.exception.InvalidMateriaException;
 import ar.com.fiuba.tpprof.hubin.model.Materia;
 import ar.com.fiuba.tpprof.hubin.repository.MateriaDao;
 
@@ -32,6 +33,14 @@ public class MateriaService {
 			materiasDTO.add(new MateriaResponseDTO(materia));
 		}
 		return materiasDTO;
+	}
+
+	public MateriaResponseDTO getMateria(int id) throws InvalidMateriaException {
+		Materia materia = materiaDao.findOne(id);
+		if (materia == null)
+			throw new InvalidMateriaException("La materia no existe");
+		// TODO Auto-generated method stub
+		return new MateriaResponseDTO(materia);
 	}
 
 }

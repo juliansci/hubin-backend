@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ar.com.fiuba.tpprof.hubin.exception.InvalidEntidadException;
 import ar.com.fiuba.tpprof.hubin.model.Entidad;
 import ar.com.fiuba.tpprof.hubin.service.EntidadService;
 
@@ -22,6 +24,12 @@ public class EntidadController {
 	@ResponseBody
 	public List<Entidad> getAllEntidades() {
 		return entidadService.getAllEntidades();
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public Entidad getEntidad(@PathVariable("id") int id) throws InvalidEntidadException {
+		return entidadService.getEntidad(id);
 	}
 
 }
