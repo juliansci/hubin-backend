@@ -1,10 +1,6 @@
 package ar.com.fiuba.tpprof.hubin.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "entidad")
@@ -17,12 +13,17 @@ public class Entidad {
 	private String cuit;
 
 	private String nombre;
+
+    private String nombreCorto;
+
+    @Column(columnDefinition = "TEXT")
+	private String descripcion;
 	
 	private String code;
 
 	private String direccion;
 
-	private Integer telefono;
+	private String telefono;
 
 	private String email;
 
@@ -71,14 +72,6 @@ public class Entidad {
 		this.direccion = direccion;
 	}
 
-	public Integer getTelefono() {
-		return telefono;
-	}
-
-	public void setTelefono(Integer telefono) {
-		this.telefono = telefono;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -95,4 +88,27 @@ public class Entidad {
 		this.activa = activa;
 	}
 
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getNombreCorto() {
+        return nombreCorto;
+    }
+
+    public void setNombreCorto(String nombreCorto) {
+        this.nombreCorto = nombreCorto;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
 }
