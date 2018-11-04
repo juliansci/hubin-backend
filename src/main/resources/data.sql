@@ -1,8 +1,8 @@
-insert into entidad (id, activa, code, cuit, direccion, email, nombre, telefono)
+insert into entidad (id, activa, code, cuit, direccion, email, nombre, nombreCorto, descripcion, telefono)
 VALUES
-(1, 1 ,'fiuba' ,'30-54666656-1' ,'Av Paseo Colon 850' ,'personal@fi.uba.ar' ,'FIUBA' ,'43430968'),
-(2, 1 ,'uade' ,'30-54666656-2' ,'Independencia 199' ,'personal@uade.ar' ,'UADE' ,'43430969'),
-(3, 1 ,'unqui' ,'30-54666656-3' ,'Av. Quilmes 800' ,'personal@unqui.ar' ,'UNQUI' ,'43430963');
+(1, 1 ,'fiuba' ,'30-54666656-1' ,'Av Paseo Colon 850 - Capital Federal - Argentina' ,'seube@fi.uba.ar','Facultad de Ingenieria de la UBA' , 'FIUBA', 'La FIUBA es la Facultad de Ingeniería que forma parte de la Universidad de Buenos Aires, en la actualidad compuesta por otras trece facultades. Se dictan en ella 11 carreras de grado y numerosos cursos de postgrado.', '011 4343-0968'),
+(2, 1 ,'uade' ,'30-54666656-2' ,'Lima 717 - Capital Federal - Argentina' ,'contactouade@uade.edu.ar' ,'Universidad Argentina de la Empresa' , 'UADE', 'La Universidad Argentina de la Empresa (UADE) es una universidad con carácter de fundación, fundada en 1957 por la Cámara Argentina de Sociedades Anónimas. Inicialmente denominada Instituto Superior de Estudios de la Empresa, en el año 1962 que recibe su nombre actual.1​ Fundada y ubicada en el Barrio de Monserrat, en la Ciudad de Buenos Aires, su actual sede está localizada en la Calle Lima 717, muy próxima a la emblemática Avenida 9 de Julio. Asimismo, en 2012 inauguró su Campus Costa Argentina ubicado en Av. Intermédanos Sur 776, Pinamar.2​', '011 4000-7600'),
+(3, 1 ,'unq' ,'30-54666656-3' ,'Roque Sáenz Peña 352 - Quilmes - Argentina' ,'info@unq.edu.ar' , 'Universidad Nacional de Quilmes', 'UNQ' , 'La Universidad Nacional de Quilmes (UNQ) es una universidad pública argentina con sede en la localidad de Bernal, en el partido bonaerense de Quilmes. Fue creada por ley nacional 23.7492​ de 1989, en 1991 tuvo lugar el primer ciclo lectivo y fue normalizada el 12 de diciembre de 1992. Ubicada en la zona sur del Gran Buenos Aires, su área de influencia se extiende a los vecinos partidos de Berazategui, Florencio Varela, Avellaneda y Almirante Brown. Esta Universidad fue pionera en Latinoamérica en materia de educación no presencial ya que en 1999 inauguró su primera aula virtual y fue la primera universidad argentina con el campus disponible por Google Street View.', '011 4365-7100');
 
 insert into idioma (id, code, nombre)
 VALUES
