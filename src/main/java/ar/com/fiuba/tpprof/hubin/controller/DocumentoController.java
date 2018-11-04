@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ar.com.fiuba.tpprof.hubin.dto.DocumentoRequestDTO;
 import ar.com.fiuba.tpprof.hubin.dto.DocumentoResponseDTO;
-import ar.com.fiuba.tpprof.hubin.dto.DocumentoUpdateRequestDTO;
 import ar.com.fiuba.tpprof.hubin.dto.FileResponseDTO;
 import ar.com.fiuba.tpprof.hubin.exception.InvalidDocumentoException;
 import ar.com.fiuba.tpprof.hubin.service.DocumentoService;
@@ -36,8 +35,8 @@ public class DocumentoController {
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
 	@ResponseBody
-	public DocumentoResponseDTO updateDocumento(@PathVariable("id") int id, @RequestBody DocumentoUpdateRequestDTO documentoUpdateRequestDTO) throws InvalidDocumentoException {
-		return documentoService.updateDocumento(id, documentoUpdateRequestDTO);
+	public DocumentoResponseDTO updateDocumento(@PathVariable("id") int id, @RequestBody DocumentoRequestDTO documentoRequestDTO) throws InvalidDocumentoException {
+		return documentoService.updateDocumento(id, documentoRequestDTO);
 	}
 	
 	@RequestMapping(value="/{id}/version", method = RequestMethod.POST, consumes = {"multipart/form-data"})
