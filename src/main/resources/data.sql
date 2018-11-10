@@ -28,7 +28,16 @@ VALUES
 (6, LOAD_FILE(CONCAT(@images_path, 'subjects/finance.jpg')), 'jpg'),
 (7, LOAD_FILE(CONCAT(@images_path, 'subjects/history.jpg')), 'jpg'),
 (8, LOAD_FILE(CONCAT(@images_path, 'subjects/language.jpg')), 'jpg'),
-(9, LOAD_FILE(CONCAT(@images_path, 'subjects/management.jpg')), 'jpg');
+(9, LOAD_FILE(CONCAT(@images_path, 'subjects/management.jpg')), 'jpg'),
+(10, LOAD_FILE(CONCAT(@images_path, 'PDF1.pdf')), 'pdf'),
+(11, LOAD_FILE(CONCAT(@images_path, 'PDF2.pdf')), 'pdf'),
+(12, LOAD_FILE(CONCAT(@images_path, 'PDF3.pdf')), 'pdf'),
+(13, LOAD_FILE(CONCAT(@images_path, 'PDF4.pdf')), 'pdf'),
+(14, LOAD_FILE(CONCAT(@images_path, 'PDF5.pdf')), 'pdf'),
+(15, LOAD_FILE(CONCAT(@images_path, 'PDF6.pdf')), 'pdf'),
+(16, LOAD_FILE(CONCAT(@images_path, 'PDF7.pdf')), 'pdf'),
+(17, LOAD_FILE(CONCAT(@images_path, 'PDF8.pdf')), 'pdf'),
+(18, LOAD_FILE(CONCAT(@images_path, 'PDF9.pdf')), 'pdf');
 
 insert into materia (id, code, destacada, foto_id, nombre)
 VALUES
@@ -62,3 +71,14 @@ insert into documento (nombre, descripcion, eliminado, extension, fechaCreacion,
   ('Management de Pymes', 'Técnicas para el manejo de pequeñas y medianas empresas.', 0, 'jpg', STR_TO_DATE('18-01-2018', '%d-%m-%Y'), STR_TO_DATE('18-01-2018', '%d-%m-%Y'), 1, 2, 2, 1, 8, 2),
   ('Historia Argentina', 'Historia argentina contemporanea', 0, 'jpg', STR_TO_DATE('25-06-2018', '%d-%m-%Y'), STR_TO_DATE('25-06-2018', '%d-%m-%Y'), 1, 3, 3, 1, 6, 1);
 
+insert into version (documento_id, file_id)
+  VALUES
+  (1,10),
+  (2,11),
+  (3,12),
+  (4,13),
+  (5,14),
+  (6,15),
+  (7,16),
+  (8,17),
+  (9,18);
