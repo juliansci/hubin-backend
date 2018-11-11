@@ -43,7 +43,7 @@ public class FeedbackRequestDTO {
 	}
 	
 	public boolean isValid() {
-		return (!tipo.isEmpty() && !mensaje.isEmpty() && !fecha.isEmpty() && !idCreador.isEmpty());
+		return (!tipo.isEmpty() && !mensaje.isEmpty());
 	}
 
 }

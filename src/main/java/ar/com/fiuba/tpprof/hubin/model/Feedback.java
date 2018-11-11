@@ -42,8 +42,7 @@ public class Feedback {
 	public Feedback(FeedbackRequestDTO feedbackRequestDTO) throws ParseException {
 		this.tipo = feedbackRequestDTO.getTipo();
 		this.mensaje = feedbackRequestDTO.getMensaje();
-		DateFormat format = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
-		this.fecha = format.parse(feedbackRequestDTO.getFecha());
+		this.fecha = new Date();
 		this.leido = false;
 	}
 
