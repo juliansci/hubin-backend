@@ -35,6 +35,8 @@ public class DocumentoResponseDTO {
 	
 	private String fechaUltModificacion;
 	
+	private String puntuacion;
+	
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = true)
 	private Idioma idioma;
@@ -78,6 +80,7 @@ public class DocumentoResponseDTO {
 			DateFormat format = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
 			fechaUltModificacion = format.format(documento.getFechaUltModificacion());
 		}
+		puntuacion = String.valueOf(documento.getPuntuacion());
 		idioma = documento.getIdioma();
 		nivel = documento.getNivel();
 		materia = documento.getMateria();
@@ -149,6 +152,14 @@ public class DocumentoResponseDTO {
 
 	public void setFechaUltModificacion(String fechaUltModificacion) {
 		this.fechaUltModificacion = fechaUltModificacion;
+	}
+
+	public String getPuntuacion() {
+		return puntuacion;
+	}
+
+	public void setPuntuacion(String puntuacion) {
+		this.puntuacion = puntuacion;
 	}
 
 	public Idioma getIdioma() {

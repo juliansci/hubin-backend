@@ -42,6 +42,8 @@ public class Documento {
     private Date fechaCreacion;
 
     private Date fechaUltModificacion;
+    
+    private Integer puntuacion;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idioma_id")
@@ -82,6 +84,7 @@ public class Documento {
         this.publico = true;
         this.fechaCreacion = new Date();
         this.fechaUltModificacion = new Date();
+        this.puntuacion = 0;
     }
 
     public Integer getId() {
@@ -158,7 +161,15 @@ public class Documento {
         this.fechaUltModificacion = format.parse(fechaUltModificacion);
     }
 
-    public Idioma getIdioma() {
+    public Integer getPuntuacion() {
+		return puntuacion;
+	}
+
+	public void setPuntuacion(Integer puntuacion) {
+		this.puntuacion = puntuacion;
+	}
+
+	public Idioma getIdioma() {
         return idioma;
     }
 

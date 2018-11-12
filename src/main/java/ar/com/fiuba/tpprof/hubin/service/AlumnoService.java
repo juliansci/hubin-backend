@@ -1,19 +1,27 @@
 package ar.com.fiuba.tpprof.hubin.service;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 import ar.com.fiuba.tpprof.hubin.model.File;
+import ar.com.fiuba.tpprof.hubin.model.Puntuacion;
 import ar.com.fiuba.tpprof.hubin.util.DocumentUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import ar.com.fiuba.tpprof.hubin.dto.AlumnoDocumentosResponseDTO;
 import ar.com.fiuba.tpprof.hubin.dto.AlumnoRequestDTO;
 import ar.com.fiuba.tpprof.hubin.dto.AlumnoResponseDTO;
 import ar.com.fiuba.tpprof.hubin.dto.AlumnoUpdateRequestDTO;
+import ar.com.fiuba.tpprof.hubin.dto.PuntuacionResponseDTO;
 import ar.com.fiuba.tpprof.hubin.exception.InvalidAlumnoException;
 import ar.com.fiuba.tpprof.hubin.model.Alumno;
 import ar.com.fiuba.tpprof.hubin.repository.AlumnoDao;
+import ar.com.fiuba.tpprof.hubin.repository.PuntuacionDao;
+
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -21,6 +29,9 @@ public class AlumnoService {
 
     @Autowired
     private AlumnoDao alumnoDao;
+    
+    @Autowired
+	private PuntuacionDao puntuacionDao;
 
     public AlumnoResponseDTO crearAlumno(AlumnoRequestDTO alumnoRequestDTO) throws InvalidAlumnoException {
         if (alumnoRequestDTO.getUsername() == null || alumnoRequestDTO.getPassword() == null) {
@@ -112,6 +123,19 @@ public class AlumnoService {
             }
         }
         return new AlumnoResponseDTO(alumno);
+    }
+    
+    public List<PuntuacionResponseDTO> getPuntuaciones() throws InvalidAlumnoException {
+    	UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Alumno alumno = alumnoDao.findByUsername(userDetails.getUsername());
+		if (alumno == null)
+            throw new InvalidAlumnoException("El usuario no existe");
+        List<Puntuacion> puntuaciones = puntuacionDao.findByAlumno(alumno);
+        List<PuntuacionResponseDTO> puntuacionesResponse = new ArrayList<PuntuacionResponseDTO>();
+        for (Puntuacion puntuacion : puntuaciones) {
+			puntuacionesResponse.add(new PuntuacionResponseDTO(puntuacion));			
+		}
+        return puntuacionesResponse;
     }
 
 }
