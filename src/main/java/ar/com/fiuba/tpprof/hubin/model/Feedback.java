@@ -1,8 +1,5 @@
 package ar.com.fiuba.tpprof.hubin.model;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -39,7 +36,7 @@ public class Feedback {
 	public Feedback() {
 	}
 	
-	public Feedback(FeedbackRequestDTO feedbackRequestDTO) throws ParseException {
+	public Feedback(FeedbackRequestDTO feedbackRequestDTO) {
 		this.tipo = feedbackRequestDTO.getTipo();
 		this.mensaje = feedbackRequestDTO.getMensaje();
 		this.fecha = new Date();

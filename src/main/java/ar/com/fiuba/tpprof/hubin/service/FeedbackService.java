@@ -1,8 +1,5 @@
 package ar.com.fiuba.tpprof.hubin.service;
 
-import java.text.ParseException;
-
-import ar.com.fiuba.tpprof.hubin.exception.InvalidDocumentoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,20 +25,13 @@ public class FeedbackService {
 		
 		if (!feedbackRequestDTO.isValid())
 			throw new InvalidFeedbackException("Datos incompletos");
-
-
+		
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
 		Alumno alumno = alumnoDao.findByUsername(userDetails.getUsername());
 		if (alumno == null)
 			throw new InvalidFeedbackException("Alumno desconocido");
 		
-		Feedback feedback = null;
-		try {
-			feedback = new Feedback(feedbackRequestDTO);
-		} catch (ParseException e) {
-			throw new InvalidFeedbackException("Formato de fecha incorrecto");
-		}
+		Feedback feedback = new Feedback(feedbackRequestDTO);
 		feedback.setCreador(alumno);
 		
 		feedbackDao.save(feedback);		

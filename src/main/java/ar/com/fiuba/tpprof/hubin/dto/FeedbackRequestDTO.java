@@ -5,10 +5,6 @@ public class FeedbackRequestDTO {
 	private String tipo;
 
 	private String mensaje;
-	
-	private String fecha;
-	
-	private String idCreador;
 
 	public String getTipo() {
 		return tipo;
@@ -24,22 +20,6 @@ public class FeedbackRequestDTO {
 
 	public void setMensaje(String mensaje) {
 		this.mensaje = mensaje;
-	}
-
-	public String getFecha() {
-		return fecha;
-	}
-
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
-	}
-
-	public String getIdCreador() {
-		return idCreador;
-	}
-
-	public void setIdCreador(String idCreador) {
-		this.idCreador = idCreador;
 	}
 	
 	public boolean isValid() {
