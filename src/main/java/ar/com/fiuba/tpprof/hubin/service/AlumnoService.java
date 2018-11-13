@@ -72,7 +72,9 @@ public class AlumnoService {
             throw new InvalidAlumnoException("El usuario no existe");
         }        
 		String username = alumnoUpdateRequestDTO.getUsername();
-		if (username != null && alumnoDao.findByUsername(username) != null) {
+        Alumno alumnoBuscado = alumnoDao.findByUsername(username);
+
+		if (username != null && alumnoBuscado != null && !alumnoBuscado.getId().equals(id)) {
 			throw new InvalidAlumnoException("El nombre de usuario ya existe");
 		}
 		try {

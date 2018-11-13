@@ -59,17 +59,17 @@ VALUES
 
 
 
-insert into documento (nombre, descripcion, eliminado, extension, fechaCreacion, fechaUltModificacion, publico, alumno_id, entidad_id, idioma_id, materia_id, nivel_id)
+insert into documento (nombre, descripcion, eliminado, extension, fechaCreacion, fechaUltModificacion, publico, alumno_id, entidad_id, idioma_id, materia_id, nivel_id, puntuacion, puntuacionCantidad)
   VALUES
-  ('Algoritmos y programación 1', 'Usted aprenderá las nociones básicas de la programación estructurada', 0, 'jpg', STR_TO_DATE('1-01-2018', '%d-%m-%Y'), STR_TO_DATE('1-01-2018', '%d-%m-%Y'), 1, 1, 1, 1, 2, 1),
-  ('Reglas de Oferta y Demanda', 'Nociones básicas de las reglas del mercado.', 0, 'jpg', STR_TO_DATE('10-7-2018', '%d-%m-%Y'), STR_TO_DATE('10-08-2018', '%d-%m-%Y'), 1, 2, 2, 1, 3, 1),
-  ('Análisis de variable compleja', 'Análisis de variable compleja', 0, 'jpg', STR_TO_DATE('1-01-2018', '%d-%m-%Y'), STR_TO_DATE('1-01-2018', '%d-%m-%Y'), 1, 1, 1, 1, 4, 3),
-  ('Física 2', 'Resumen de la materia Física 2 FIUBA', 0, 'jpg', STR_TO_DATE('10-01-2018', '%d-%m-%Y'), STR_TO_DATE('10-01-2018', '%d-%m-%Y'), 1, 1, 1, 1, 4, 2),
-  ('Biología General', 'Conocimientos básicos de biología', 0, 'jpg', STR_TO_DATE('23-08-2018', '%d-%m-%Y'), STR_TO_DATE('23-08-2018', '%d-%m-%Y'), 1, 3, 3, 1, 1, 1),
-  ('English for dummies', 'English por beginners.', 0, 'jpg', STR_TO_DATE('1-09-2018', '%d-%m-%Y'), STR_TO_DATE('1-09-2018', '%d-%m-%Y'), 1, 3, 3, 2, 7, 1),
-  ('Finanzas personales', 'Como manejar las finanzas personales.', 0, 'jpg', STR_TO_DATE('1-01-2018', '%d-%m-%Y'), STR_TO_DATE('1-01-2018', '%d-%m-%Y'), 1, 3, 3, 1, 5, 1),
-  ('Management de Pymes', 'Técnicas para el manejo de pequeñas y medianas empresas.', 0, 'jpg', STR_TO_DATE('18-01-2018', '%d-%m-%Y'), STR_TO_DATE('18-01-2018', '%d-%m-%Y'), 1, 2, 2, 1, 8, 2),
-  ('Historia Argentina', 'Historia argentina contemporanea', 0, 'jpg', STR_TO_DATE('25-06-2018', '%d-%m-%Y'), STR_TO_DATE('25-06-2018', '%d-%m-%Y'), 1, 3, 3, 1, 6, 1);
+  ('Algoritmos y programación 1', 'Usted aprenderá las nociones básicas de la programación estructurada', 0, 'jpg', STR_TO_DATE('1-01-2018', '%d-%m-%Y'), STR_TO_DATE('1-01-2018', '%d-%m-%Y'), 1, 1, 1, 1, 2, 1, 0 ,0),
+  ('Reglas de Oferta y Demanda', 'Nociones básicas de las reglas del mercado.', 0, 'jpg', STR_TO_DATE('10-7-2018', '%d-%m-%Y'), STR_TO_DATE('10-08-2018', '%d-%m-%Y'), 1, 2, 2, 1, 3, 1, 0 ,0),
+  ('Análisis de variable compleja', 'Análisis de variable compleja', 0, 'jpg', STR_TO_DATE('1-01-2018', '%d-%m-%Y'), STR_TO_DATE('1-01-2018', '%d-%m-%Y'), 1, 1, 1, 1, 4, 3, 0 ,0),
+  ('Física 2', 'Resumen de la materia Física 2 FIUBA', 0, 'jpg', STR_TO_DATE('10-01-2018', '%d-%m-%Y'), STR_TO_DATE('10-01-2018', '%d-%m-%Y'), 1, 1, 1, 1, 4, 2, 0 ,0),
+  ('Biología General', 'Conocimientos básicos de biología', 0, 'jpg', STR_TO_DATE('23-08-2018', '%d-%m-%Y'), STR_TO_DATE('23-08-2018', '%d-%m-%Y'), 1, 3, 3, 1, 1, 1, 0 ,0),
+  ('English for dummies', 'English por beginners.', 0, 'jpg', STR_TO_DATE('1-09-2018', '%d-%m-%Y'), STR_TO_DATE('1-09-2018', '%d-%m-%Y'), 1, 3, 3, 2, 7, 1, 0 ,0),
+  ('Finanzas personales', 'Como manejar las finanzas personales.', 0, 'jpg', STR_TO_DATE('1-01-2018', '%d-%m-%Y'), STR_TO_DATE('1-01-2018', '%d-%m-%Y'), 1, 3, 3, 1, 5, 1, 0 ,0),
+  ('Management de Pymes', 'Técnicas para el manejo de pequeñas y medianas empresas.', 0, 'jpg', STR_TO_DATE('18-01-2018', '%d-%m-%Y'), STR_TO_DATE('18-01-2018', '%d-%m-%Y'), 1, 2, 2, 1, 8, 2, 0 ,0),
+  ('Historia Argentina', 'Historia argentina contemporanea', 0, 'jpg', STR_TO_DATE('25-06-2018', '%d-%m-%Y'), STR_TO_DATE('25-06-2018', '%d-%m-%Y'), 1, 3, 3, 1, 6, 1, 0 ,0);
 
 insert into version (documento_id, file_id)
   VALUES

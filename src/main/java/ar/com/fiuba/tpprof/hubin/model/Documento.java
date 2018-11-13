@@ -7,17 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import ar.com.fiuba.tpprof.hubin.dto.DocumentoRequestDTO;
 
@@ -42,8 +32,10 @@ public class Documento {
     private Date fechaCreacion;
 
     private Date fechaUltModificacion;
-    
-    private Integer puntuacion;
+
+    private Double puntuacion;
+
+    private Integer puntuacionCantidad;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idioma_id")
@@ -84,7 +76,8 @@ public class Documento {
         this.publico = true;
         this.fechaCreacion = new Date();
         this.fechaUltModificacion = new Date();
-        this.puntuacion = 0;
+        this.puntuacion = 0.0;
+        this.puntuacionCantidad = 0;
     }
 
     public Integer getId() {
@@ -161,15 +154,15 @@ public class Documento {
         this.fechaUltModificacion = format.parse(fechaUltModificacion);
     }
 
-    public Integer getPuntuacion() {
-		return puntuacion;
-	}
+    public Double getPuntuacion() {
+        return puntuacion;
+    }
 
-	public void setPuntuacion(Integer puntuacion) {
-		this.puntuacion = puntuacion;
-	}
+    public void setPuntuacion(Double puntuacion) {
+        this.puntuacion = puntuacion;
+    }
 
-	public Idioma getIdioma() {
+    public Idioma getIdioma() {
         return idioma;
     }
 
@@ -231,6 +224,14 @@ public class Documento {
 
     public void addCompartido(Alumno alumno) {
         compartidos.add(alumno);
+    }
+
+    public Integer getPuntuacionCantidad() {
+        return puntuacionCantidad;
+    }
+
+    public void setPuntuacionCantidad(Integer puntuacionCantidad) {
+        this.puntuacionCantidad = puntuacionCantidad;
     }
 
     public void update(DocumentoRequestDTO documentoRequestDTO) {

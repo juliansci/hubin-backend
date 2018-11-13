@@ -14,4 +14,7 @@ public interface PuntuacionDao extends CrudRepository<Puntuacion, Integer> {
 	
 	List<Puntuacion> findByDocumento(Documento documento);
 
+	Puntuacion findByDocumentoAndAlumno(Documento documento, Alumno alumno);
+
+
 }

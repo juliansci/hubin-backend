@@ -41,16 +41,23 @@ public class PuntuacionService {
 		Documento documento = documentoDao.findOne(Integer.parseInt(puntuacionRequestDTO.getIdDocumento()));
 		if (documento == null)
 			throw new InvalidPuntuacionException("Documento desconocido");
-		
-		Puntuacion puntuacion = new Puntuacion(puntuacionRequestDTO);
-		puntuacion.setAlummno(alumno);
-		puntuacion.setDocumento(documento);
-		puntuacionDao.save(puntuacion);
-		
+
+
+		Puntuacion puntuacionGuardada = puntuacionDao.findByDocumentoAndAlumno(documento, alumno);
+		if(puntuacionGuardada != null){
+			puntuacionGuardada.setPuntuacion(Integer.parseInt(puntuacionRequestDTO.getPuntuacion()));
+			puntuacionDao.save(puntuacionGuardada);
+		}else{
+			Puntuacion puntuacion = new Puntuacion(puntuacionRequestDTO);
+			puntuacion.setAlummno(alumno);
+			puntuacion.setDocumento(documento);
+			puntuacionDao.save(puntuacion);
+		}
 		List<Puntuacion> puntuaciones = puntuacionDao.findByDocumento(documento);
 		int totalAcumulado = puntuaciones.stream().mapToInt(Puntuacion::getPuntuacion).sum();
-		int totalPuntuacion = totalAcumulado / puntuaciones.size();
+		Double totalPuntuacion = totalAcumulado / new Double(puntuaciones.size());
 		documento.setPuntuacion(totalPuntuacion);
+		documento.setPuntuacionCantidad(puntuaciones.size());
 		documentoDao.save(documento);
 		
 	}
