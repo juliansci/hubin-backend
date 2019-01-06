@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import ar.com.fiuba.tpprof.hubin.dto.ComentarioResponseDTO;
 import ar.com.fiuba.tpprof.hubin.dto.DocumentoRequestDTO;
 import ar.com.fiuba.tpprof.hubin.dto.DocumentoResponseDTO;
 import ar.com.fiuba.tpprof.hubin.dto.FileResponseDTO;
@@ -65,6 +66,12 @@ public class DocumentoController {
 			@RequestParam(value = "language", required = false) List<Integer> idIdioma,
 			@RequestParam(value = "level", required = false) List<Integer> idNivel) throws InvalidDocumentoException {
 		return documentoService.getDocumentos(nombre, idEntidad, idMateria, idIdioma, idNivel);
+	}
+	
+	@RequestMapping(value="/{idDocumento}/comentarios", method = RequestMethod.GET)
+	@ResponseBody
+	public List<ComentarioResponseDTO> getComentarios(@PathVariable("idDocumento") int idDocumento) throws InvalidDocumentoException {
+		return documentoService.getComentarios(idDocumento);
 	}
 
 }
