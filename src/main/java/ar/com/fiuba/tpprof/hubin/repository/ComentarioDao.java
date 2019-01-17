@@ -8,7 +8,7 @@ import ar.com.fiuba.tpprof.hubin.model.Comentario;
 import ar.com.fiuba.tpprof.hubin.model.Documento;
 
 public interface ComentarioDao extends CrudRepository<Comentario, Integer> {
-	
-	List<Comentario> findByDocumento(Documento documento);
+
+	List<Comentario> findByDocumentoOrderByIdDesc(Documento documento);
 
 }

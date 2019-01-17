@@ -51,7 +51,7 @@ public class DocumentoService {
 
     @Autowired
     private NivelDao nivelDao;
-    
+
     @Autowired
     private ComentarioDao comentarioDao;
 
@@ -217,15 +217,15 @@ public class DocumentoService {
 		Alumno alumno = alumnoDao.findByUsername(userDetails.getUsername());
 		if (alumno == null)
 			throw new InvalidDocumentoException("Alumno desconocido");
-		
+
 		Documento documento = documentoDao.findOne(idDocumento);
 		if (documento == null)
 			throw new InvalidDocumentoException("Documento desconocido");
-		
-		List<Comentario> comentarios = comentarioDao.findByDocumento(documento);
+
+		List<Comentario> comentarios = comentarioDao.findByDocumentoOrderByIdDesc(documento);
         List<ComentarioResponseDTO> comentariosResponse = new ArrayList<ComentarioResponseDTO>();
         for (Comentario comentario : comentarios) {
-        	comentariosResponse.add(new ComentarioResponseDTO(comentario));			
+        	comentariosResponse.add(new ComentarioResponseDTO(comentario));
 		}
         return comentariosResponse;
 	}
