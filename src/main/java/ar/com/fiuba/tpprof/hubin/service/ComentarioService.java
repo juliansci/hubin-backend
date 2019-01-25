@@ -16,13 +16,13 @@ import ar.com.fiuba.tpprof.hubin.repository.DocumentoDao;
 
 @Service
 public class ComentarioService {
-	
+
 	@Autowired
     private ComentarioDao comentarioDao;
-	
+
 	@Autowired
 	private AlumnoDao alumnoDao;
-	
+
 	@Autowired
     private DocumentoDao documentoDao;
 
@@ -30,23 +30,22 @@ public class ComentarioService {
 
 		if (!comentarioRequestDTO.isValid())
 			throw new InvalidComentarioException("Datos incompletos");
-		
+
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Alumno alumno = alumnoDao.findByUsername(userDetails.getUsername());
 		if (alumno == null)
 			throw new InvalidComentarioException("Alumno desconocido");
-		
+
 		Documento documento = documentoDao.findOne(Integer.parseInt(comentarioRequestDTO.getIdDocumento()));
 		if (documento == null)
 			throw new InvalidComentarioException("Documento desconocido");
-		
+
 		Comentario comentario = new Comentario(comentarioRequestDTO);
 		comentario.setCreador(alumno);
-		comentario.setDocumento(documento);		
-		comentarioDao.save(comentario);	
-		
+		comentario.setDocumento(documento);
+		comentarioDao.save(comentario);
 	}
 
-	
-	
+
+
 }

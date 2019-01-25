@@ -3,7 +3,6 @@ package ar.com.fiuba.tpprof.hubin.service;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,6 +29,7 @@ import ar.com.fiuba.tpprof.hubin.repository.EntidadDao;
 import ar.com.fiuba.tpprof.hubin.repository.IdiomaDao;
 import ar.com.fiuba.tpprof.hubin.repository.MateriaDao;
 import ar.com.fiuba.tpprof.hubin.repository.NivelDao;
+
 
 @Service
 public class DocumentoService {
@@ -212,22 +212,40 @@ public class DocumentoService {
         return documentosResponse;
     }
 
-	public List<ComentarioResponseDTO> getComentarios(int idDocumento) throws InvalidDocumentoException {
-		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Alumno alumno = alumnoDao.findByUsername(userDetails.getUsername());
-		if (alumno == null)
-			throw new InvalidDocumentoException("Alumno desconocido");
+    public List<ComentarioResponseDTO> getComentarios(int idDocumento) throws InvalidDocumentoException {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Alumno alumno = alumnoDao.findByUsername(userDetails.getUsername());
+        if (alumno == null)
+            throw new InvalidDocumentoException("Alumno desconocido");
 
-		Documento documento = documentoDao.findOne(idDocumento);
-		if (documento == null)
-			throw new InvalidDocumentoException("Documento desconocido");
+        Documento documento = documentoDao.findOne(idDocumento);
+        if (documento == null)
+            throw new InvalidDocumentoException("Documento desconocido");
 
-		List<Comentario> comentarios = comentarioDao.findByDocumentoOrderByIdDesc(documento);
+        List<Comentario> comentarios = comentarioDao.findByDocumentoOrderByIdDesc(documento);
         List<ComentarioResponseDTO> comentariosResponse = new ArrayList<ComentarioResponseDTO>();
         for (Comentario comentario : comentarios) {
-        	comentariosResponse.add(new ComentarioResponseDTO(comentario));
-		}
+            comentariosResponse.add(new ComentarioResponseDTO(comentario));
+        }
         return comentariosResponse;
-	}
+    }
 
+    public List<DocumentoResponseDTO> getDocumentosRelacionados(int idDocumento) throws InvalidDocumentoException {
+        Documento documento = documentoDao.findOne(idDocumento);
+        if (documento == null) {
+            throw new InvalidDocumentoException("Documento inexistente");
+        }
+        List<Documento> documentosRelacionadosEntidad = documentoDao.buscarPorIdEntidad(documento.getEntidad().getId());
+        documentosRelacionadosEntidad.remove(documento);
+        List<Documento> documentosRelacionadosMateria = documentoDao.buscarPorIdMateria(documento.getMateria().getId());
+        documentosRelacionadosMateria.remove(documento);
+        List<Documento> documentosRelacionados = new ArrayList<>();
+        documentosRelacionados.addAll(documentosRelacionadosMateria);
+        documentosRelacionados.addAll(documentosRelacionadosEntidad);
+        List<DocumentoResponseDTO> documentosResponse = new ArrayList<>();
+        for (Documento documentoActual : documentosRelacionados) {
+            documentosResponse.add(new DocumentoResponseDTO(documentoActual));
+        }
+        return documentosResponse;
+    }
 }
