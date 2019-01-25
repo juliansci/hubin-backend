@@ -58,10 +58,10 @@ public class AlumnoController {
         return alumnoService.updateAlumno(id, alumnoUpdateRequestDTO);
     }
 
-    @RequestMapping(value = "/{id}/documentos", method = RequestMethod.GET)
+    @RequestMapping(value = "/documentos", method = RequestMethod.GET)
     @ResponseBody
-    public AlumnoDocumentosResponseDTO getDocumentos(@PathVariable("id") int id) throws InvalidAlumnoException {
-        return alumnoService.getDocumentos(id);
+    public AlumnoDocumentosResponseDTO getDocumentos() throws InvalidAlumnoException {
+        return alumnoService.getDocumentos();
     }
 
     @RequestMapping(value = "/{id}/profile/image", method = RequestMethod.POST, consumes = {"multipart/form-data"})
@@ -69,7 +69,7 @@ public class AlumnoController {
     public AlumnoResponseDTO addImageProfile(@PathVariable("id") int id, @RequestParam("profileImage") MultipartFile profileImage)  throws InvalidAlumnoException{
             return alumnoService.addImageProfile(id, profileImage);
     }
-    
+
     @RequestMapping(value = "/puntuaciones", method = RequestMethod.GET)
     @ResponseBody
     public List<PuntuacionResponseDTO> getPuntuaciones() throws InvalidAlumnoException {

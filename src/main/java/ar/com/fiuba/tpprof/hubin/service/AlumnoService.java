@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.com.fiuba.tpprof.hubin.exception.InvalidDocumentoException;
 import ar.com.fiuba.tpprof.hubin.model.File;
 import ar.com.fiuba.tpprof.hubin.model.Puntuacion;
 import ar.com.fiuba.tpprof.hubin.util.DocumentUtil;
@@ -29,9 +30,9 @@ public class AlumnoService {
 
     @Autowired
     private AlumnoDao alumnoDao;
-    
+
     @Autowired
-	private PuntuacionDao puntuacionDao;
+    private PuntuacionDao puntuacionDao;
 
     public AlumnoResponseDTO crearAlumno(AlumnoRequestDTO alumnoRequestDTO) throws InvalidAlumnoException {
         if (alumnoRequestDTO.getUsername() == null || alumnoRequestDTO.getPassword() == null) {
@@ -70,27 +71,27 @@ public class AlumnoService {
         Alumno alumno = alumnoDao.findOne(id);
         if (alumno == null) {
             throw new InvalidAlumnoException("El usuario no existe");
-        }        
-		String username = alumnoUpdateRequestDTO.getUsername();
+        }
+        String username = alumnoUpdateRequestDTO.getUsername();
         Alumno alumnoBuscado = alumnoDao.findByUsername(username);
 
-		if (username != null && alumnoBuscado != null && !alumnoBuscado.getId().equals(id)) {
-			throw new InvalidAlumnoException("El nombre de usuario ya existe");
-		}
-		try {
-			alumno.update(alumnoUpdateRequestDTO);
-		} catch (ParseException e) {
-			throw new InvalidAlumnoException("Formato de fecha incorrecto");
-		}
+        if (username != null && alumnoBuscado != null && !alumnoBuscado.getId().equals(id)) {
+            throw new InvalidAlumnoException("El nombre de usuario ya existe");
+        }
+        try {
+            alumno.update(alumnoUpdateRequestDTO);
+        } catch (ParseException e) {
+            throw new InvalidAlumnoException("Formato de fecha incorrecto");
+        }
         alumnoDao.save(alumno);
         return new AlumnoResponseDTO(alumno);
     }
 
-    public AlumnoDocumentosResponseDTO getDocumentos(int id) throws InvalidAlumnoException {
-        Alumno alumno = alumnoDao.findOne(id);
-        if (alumno == null) {
+    public AlumnoDocumentosResponseDTO getDocumentos() throws InvalidAlumnoException {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Alumno alumno = alumnoDao.findByUsername(userDetails.getUsername());
+        if (alumno == null)
             throw new InvalidAlumnoException("El usuario no existe");
-        }
         return new AlumnoDocumentosResponseDTO(alumno);
     }
 
@@ -126,17 +127,17 @@ public class AlumnoService {
         }
         return new AlumnoResponseDTO(alumno);
     }
-    
+
     public List<PuntuacionResponseDTO> getPuntuaciones() throws InvalidAlumnoException {
-    	UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Alumno alumno = alumnoDao.findByUsername(userDetails.getUsername());
-		if (alumno == null)
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Alumno alumno = alumnoDao.findByUsername(userDetails.getUsername());
+        if (alumno == null)
             throw new InvalidAlumnoException("El usuario no existe");
         List<Puntuacion> puntuaciones = puntuacionDao.findByAlumno(alumno);
         List<PuntuacionResponseDTO> puntuacionesResponse = new ArrayList<PuntuacionResponseDTO>();
         for (Puntuacion puntuacion : puntuaciones) {
-			puntuacionesResponse.add(new PuntuacionResponseDTO(puntuacion));			
-		}
+            puntuacionesResponse.add(new PuntuacionResponseDTO(puntuacion));
+        }
         return puntuacionesResponse;
     }
 

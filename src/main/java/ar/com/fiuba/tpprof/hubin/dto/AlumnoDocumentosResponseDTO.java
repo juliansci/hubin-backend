@@ -7,9 +7,9 @@ import ar.com.fiuba.tpprof.hubin.model.Alumno;
 import ar.com.fiuba.tpprof.hubin.model.Documento;
 
 public class AlumnoDocumentosResponseDTO {
-	
+
 	private List<DocumentoResponseDTO> documentosCreados = new ArrayList<DocumentoResponseDTO>();
-	
+
 	private List<DocumentoResponseDTO> documentosConAcceso = new ArrayList<DocumentoResponseDTO>();
 
 	public AlumnoDocumentosResponseDTO(Alumno alumno) {
