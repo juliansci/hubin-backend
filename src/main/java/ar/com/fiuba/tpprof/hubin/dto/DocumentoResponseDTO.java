@@ -55,9 +55,7 @@ public class DocumentoResponseDTO {
     @JsonIdentityReference(alwaysAsId = true)
     private Entidad entidad;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
-    private Alumno creador;
+    private CreadorDocumentoResponseDTO creador;
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
@@ -87,7 +85,7 @@ public class DocumentoResponseDTO {
         nivel = documento.getNivel();
         materia = documento.getMateria();
         entidad = documento.getEntidad();
-        creador = documento.getCreador();
+        creador = new CreadorDocumentoResponseDTO(documento.getCreador());
         versiones = documento.getVersiones();
         compartidos = documento.getCompartidos();
         puntuacionCantidad = documento.getPuntuacionCantidad();
@@ -197,11 +195,11 @@ public class DocumentoResponseDTO {
         this.entidad = entidad;
     }
 
-    public Alumno getCreador() {
+    public CreadorDocumentoResponseDTO getCreador() {
         return creador;
     }
 
-    public void setCreador(Alumno creador) {
+    public void setCreador(CreadorDocumentoResponseDTO creador) {
         this.creador = creador;
     }
 
