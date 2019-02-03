@@ -1,5 +1,9 @@
 package ar.com.fiuba.tpprof.hubin.service;
 
+import ar.com.fiuba.tpprof.hubin.dto.ComentarioEntidadRequestDTO;
+import ar.com.fiuba.tpprof.hubin.dto.ComentarioMateriaRequestDTO;
+import ar.com.fiuba.tpprof.hubin.model.*;
+import ar.com.fiuba.tpprof.hubin.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,24 +11,27 @@ import org.springframework.stereotype.Service;
 
 import ar.com.fiuba.tpprof.hubin.dto.ComentarioRequestDTO;
 import ar.com.fiuba.tpprof.hubin.exception.InvalidComentarioException;
-import ar.com.fiuba.tpprof.hubin.model.Alumno;
-import ar.com.fiuba.tpprof.hubin.model.Comentario;
-import ar.com.fiuba.tpprof.hubin.model.Documento;
-import ar.com.fiuba.tpprof.hubin.repository.AlumnoDao;
-import ar.com.fiuba.tpprof.hubin.repository.ComentarioDao;
-import ar.com.fiuba.tpprof.hubin.repository.DocumentoDao;
 
 @Service
 public class ComentarioService {
 
 	@Autowired
     private ComentarioDao comentarioDao;
-
+	@Autowired
+	private ComentarioEntidadDao comentarioEntidadDao;
+	@Autowired
+	private ComentarioMateriaDao comentarioMateriaDao;
 	@Autowired
 	private AlumnoDao alumnoDao;
 
 	@Autowired
     private DocumentoDao documentoDao;
+
+	@Autowired
+	private EntidadDao entidadDao;
+
+	@Autowired
+	private MateriaDao materiaDao;
 
 	public void crearComentario(ComentarioRequestDTO comentarioRequestDTO) throws InvalidComentarioException {
 
@@ -46,6 +53,43 @@ public class ComentarioService {
 		comentarioDao.save(comentario);
 	}
 
+	public void crearComentario(ComentarioEntidadRequestDTO comentarioRequestDTO) throws InvalidComentarioException {
 
+		if (!comentarioRequestDTO.isValid())
+			throw new InvalidComentarioException("Datos incompletos");
 
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Alumno alumno = alumnoDao.findByUsername(userDetails.getUsername());
+		if (alumno == null)
+			throw new InvalidComentarioException("Alumno desconocido");
+
+		Entidad entidad = entidadDao.findOne(Integer.parseInt(comentarioRequestDTO.getIdEntidad()));
+		if (entidad == null)
+			throw new InvalidComentarioException("Entidad desconocida");
+
+		ComentarioEntidad comentario = new ComentarioEntidad(comentarioRequestDTO);
+		comentario.setCreador(alumno);
+		comentario.setEntidad(entidad);
+		comentarioEntidadDao.save(comentario);
+	}
+
+	public void crearComentario(ComentarioMateriaRequestDTO comentarioRequestDTO) throws InvalidComentarioException {
+
+		if (!comentarioRequestDTO.isValid())
+			throw new InvalidComentarioException("Datos incompletos");
+
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Alumno alumno = alumnoDao.findByUsername(userDetails.getUsername());
+		if (alumno == null)
+			throw new InvalidComentarioException("Alumno desconocido");
+
+		Materia materia = materiaDao.findOne(Integer.parseInt(comentarioRequestDTO.getIdMateria()));
+		if (materia == null)
+			throw new InvalidComentarioException("Materia desconocida");
+
+		ComentarioMateria comentario = new ComentarioMateria(comentarioRequestDTO);
+		comentario.setCreador(alumno);
+		comentario.setMateria(materia);
+		comentarioMateriaDao.save(comentario);
+	}
 }

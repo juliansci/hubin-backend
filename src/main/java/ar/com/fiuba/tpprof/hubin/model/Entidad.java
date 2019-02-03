@@ -1,92 +1,106 @@
 package ar.com.fiuba.tpprof.hubin.model;
 
+import com.fasterxml.jackson.annotation.*;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "entidad")
 public class Entidad {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	private String cuit;
+    private String cuit;
 
-	private String nombre;
+    private String nombre;
 
     private String nombreCorto;
 
     @Column(columnDefinition = "TEXT")
-	private String descripcion;
-	
-	private String code;
+    private String descripcion;
 
-	private String direccion;
+    private String code;
 
-	private String telefono;
+    private String direccion;
 
-	private String email;
+    private String telefono;
 
-	private boolean activa;
+    private String email;
 
-	public Entidad() {
-	}
+    private boolean activa;
 
-	public Integer getId() {
-		return id;
-	}
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "entidad", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    @OrderBy("id desc")
+    private List<ComentarioEntidad> comentarios = new ArrayList<>();
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "entidad", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    private List<Documento> documentos = new ArrayList<Documento>();
 
-	public String getCuit() {
-		return cuit;
-	}
+    public Entidad() {
+    }
 
-	public void setCuit(String cuit) {
-		this.cuit = cuit;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public String getCuit() {
+        return cuit;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public void setCuit(String cuit) {
+        this.cuit = cuit;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public String getNombre() {
+        return nombre;
+    }
 
-	public String getDireccion() {
-		return direccion;
-	}
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getDireccion() {
+        return direccion;
+    }
 
-	public boolean isActiva() {
-		return activa;
-	}
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
 
-	public void setActiva(boolean activa) {
-		this.activa = activa;
-	}
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isActiva() {
+        return activa;
+    }
+
+    public void setActiva(boolean activa) {
+        this.activa = activa;
+    }
 
     public String getDescripcion() {
         return descripcion;
@@ -110,5 +124,21 @@ public class Entidad {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public List<ComentarioEntidad> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(List<ComentarioEntidad> comentarios) {
+        this.comentarios = comentarios;
+    }
+
+    public List<Documento> getDocumentos() {
+        return documentos;
+    }
+
+    public void setDocumentos(List<Documento> documentos) {
+        this.documentos = documentos;
     }
 }
