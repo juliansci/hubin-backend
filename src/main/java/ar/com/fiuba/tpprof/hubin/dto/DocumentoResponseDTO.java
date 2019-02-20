@@ -57,13 +57,11 @@ public class DocumentoResponseDTO {
 
     private CreadorDocumentoResponseDTO creador;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
-    private List<File> versiones = new ArrayList<File>();
+    private List<FileMetadataResponseDTO> versiones = new ArrayList<>();
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
-    private List<Alumno> compartidos = new ArrayList<Alumno>();
+    private List<Alumno> compartidos;
 
     public DocumentoResponseDTO(Documento documento) {
         id = String.valueOf(documento.getId());
@@ -86,7 +84,9 @@ public class DocumentoResponseDTO {
         materia = documento.getMateria();
         entidad = documento.getEntidad();
         creador = new CreadorDocumentoResponseDTO(documento.getCreador());
-        versiones = documento.getVersiones();
+        for (File file : documento.getVersiones()) {
+            versiones.add(new FileMetadataResponseDTO(file));
+        }
         compartidos = documento.getCompartidos();
         puntuacionCantidad = documento.getPuntuacionCantidad();
     }
@@ -203,11 +203,12 @@ public class DocumentoResponseDTO {
         this.creador = creador;
     }
 
-    public List<File> getVersiones() {
+
+    public List<FileMetadataResponseDTO> getVersiones() {
         return versiones;
     }
 
-    public void setVersiones(List<File> versiones) {
+    public void setVersiones(List<FileMetadataResponseDTO> versiones) {
         this.versiones = versiones;
     }
 

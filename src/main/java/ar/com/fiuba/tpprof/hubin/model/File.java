@@ -1,6 +1,7 @@
 package ar.com.fiuba.tpprof.hubin.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "file")
@@ -13,10 +14,12 @@ public class File {
     @Lob
     private byte[] data;
 
+    private Date fecha;
 
     private String extension;
 
     public File() {
+        this.fecha = new Date();
     }
 
     public Integer getId() {
@@ -41,5 +44,13 @@ public class File {
 
     public void setExtension(String extension) {
         this.extension = extension;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 }

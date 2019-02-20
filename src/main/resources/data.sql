@@ -18,26 +18,26 @@ VALUES
 
 
 SET @images_path := '/var/lib/mysql-files/';
-insert into file (id, data, extension)
+insert into file (id, data, extension, fecha)
 VALUES
-(1, LOAD_FILE(CONCAT(@images_path, 'user-profile.jpg')), 'jpg'),
-(2, LOAD_FILE(CONCAT(@images_path, 'subjects/biology.jpg')), 'jpg'),
-(3, LOAD_FILE(CONCAT(@images_path, 'subjects/computer.jpg')), 'jpg'),
-(4, LOAD_FILE(CONCAT(@images_path, 'subjects/economy.jpg')), 'jpg'),
-(5, LOAD_FILE(CONCAT(@images_path, 'subjects/engineering.jpg')), 'jpg'),
-(6, LOAD_FILE(CONCAT(@images_path, 'subjects/finance.jpg')), 'jpg'),
-(7, LOAD_FILE(CONCAT(@images_path, 'subjects/history.jpg')), 'jpg'),
-(8, LOAD_FILE(CONCAT(@images_path, 'subjects/language.jpg')), 'jpg'),
-(9, LOAD_FILE(CONCAT(@images_path, 'subjects/management.jpg')), 'jpg'),
-(10, LOAD_FILE(CONCAT(@images_path, 'PDF1.pdf')), 'pdf'),
-(11, LOAD_FILE(CONCAT(@images_path, 'PDF2.pdf')), 'pdf'),
-(12, LOAD_FILE(CONCAT(@images_path, 'PDF3.pdf')), 'pdf'),
-(13, LOAD_FILE(CONCAT(@images_path, 'PDF4.pdf')), 'pdf'),
-(14, LOAD_FILE(CONCAT(@images_path, 'PDF5.pdf')), 'pdf'),
-(15, LOAD_FILE(CONCAT(@images_path, 'PDF6.pdf')), 'pdf'),
-(16, LOAD_FILE(CONCAT(@images_path, 'PDF7.pdf')), 'pdf'),
-(17, LOAD_FILE(CONCAT(@images_path, 'PDF8.pdf')), 'pdf'),
-(18, LOAD_FILE(CONCAT(@images_path, 'PDF9.pdf')), 'pdf');
+(1, LOAD_FILE(CONCAT(@images_path, 'user-profile.jpg')), 'jpg', STR_TO_DATE('01-01-2019', '%d-%m-%Y')),
+(2, LOAD_FILE(CONCAT(@images_path, 'subjects/biology.jpg')), 'jpg', STR_TO_DATE('01-01-2019', '%d-%m-%Y')),
+(3, LOAD_FILE(CONCAT(@images_path, 'subjects/computer.jpg')), 'jpg', STR_TO_DATE('01-01-2019', '%d-%m-%Y')),
+(4, LOAD_FILE(CONCAT(@images_path, 'subjects/economy.jpg')), 'jpg', STR_TO_DATE('01-01-2019', '%d-%m-%Y')),
+(5, LOAD_FILE(CONCAT(@images_path, 'subjects/engineering.jpg')), 'jpg', STR_TO_DATE('01-01-2019', '%d-%m-%Y')),
+(6, LOAD_FILE(CONCAT(@images_path, 'subjects/finance.jpg')), 'jpg', STR_TO_DATE('01-01-2019', '%d-%m-%Y')),
+(7, LOAD_FILE(CONCAT(@images_path, 'subjects/history.jpg')), 'jpg', STR_TO_DATE('01-01-2019', '%d-%m-%Y')),
+(8, LOAD_FILE(CONCAT(@images_path, 'subjects/language.jpg')), 'jpg', STR_TO_DATE('01-01-2019', '%d-%m-%Y')),
+(9, LOAD_FILE(CONCAT(@images_path, 'subjects/management.jpg')), 'jpg', STR_TO_DATE('01-01-2019', '%d-%m-%Y')),
+(10, LOAD_FILE(CONCAT(@images_path, 'PDF1.pdf')), 'pdf', STR_TO_DATE('01-01-2019', '%d-%m-%Y')),
+(11, LOAD_FILE(CONCAT(@images_path, 'PDF2.pdf')), 'pdf', STR_TO_DATE('01-01-2019', '%d-%m-%Y')),
+(12, LOAD_FILE(CONCAT(@images_path, 'PDF3.pdf')), 'pdf', STR_TO_DATE('01-01-2019', '%d-%m-%Y')),
+(13, LOAD_FILE(CONCAT(@images_path, 'PDF4.pdf')), 'pdf', STR_TO_DATE('01-01-2019', '%d-%m-%Y')),
+(14, LOAD_FILE(CONCAT(@images_path, 'PDF5.pdf')), 'pdf', STR_TO_DATE('01-01-2019', '%d-%m-%Y')),
+(15, LOAD_FILE(CONCAT(@images_path, 'PDF6.pdf')), 'pdf', STR_TO_DATE('01-01-2019', '%d-%m-%Y')),
+(16, LOAD_FILE(CONCAT(@images_path, 'PDF7.pdf')), 'pdf', STR_TO_DATE('01-01-2019', '%d-%m-%Y')),
+(17, LOAD_FILE(CONCAT(@images_path, 'PDF8.pdf')), 'pdf', STR_TO_DATE('01-01-2019', '%d-%m-%Y')),
+(18, LOAD_FILE(CONCAT(@images_path, 'PDF9.pdf')), 'pdf', STR_TO_DATE('01-01-2019', '%d-%m-%Y'));
 
 insert into materia (id, code, destacada, foto_id, nombre)
 VALUES
