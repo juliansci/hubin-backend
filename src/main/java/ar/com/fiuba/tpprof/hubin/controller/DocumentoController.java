@@ -2,6 +2,7 @@ package ar.com.fiuba.tpprof.hubin.controller;
 
 import java.util.List;
 
+import ar.com.fiuba.tpprof.hubin.exception.InvalidProveedorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -80,4 +81,16 @@ public class DocumentoController {
 		return documentoService.getDocumentosRelacionados(idDocumento);
 	}
 
+	@RequestMapping(value="/{idDocumento}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public void deleteDocumento(@PathVariable("idDocumento") int id) throws InvalidDocumentoException {
+		documentoService.deleteDocumento(id);
+	}
+
+
+	@RequestMapping(value="/restore/{idDocumento}", method = RequestMethod.POST)
+	@ResponseBody
+	public void restoreDocumento(@PathVariable("idDocumento") int id) throws InvalidDocumentoException {
+		documentoService.restoreDocumento(id);
+	}
 }

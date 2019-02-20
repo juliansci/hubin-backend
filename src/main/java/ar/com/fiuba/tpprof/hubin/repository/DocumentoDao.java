@@ -10,7 +10,7 @@ import ar.com.fiuba.tpprof.hubin.model.Documento;
 
 public interface DocumentoDao extends CrudRepository<Documento, Integer> {
 
-	@Query("select d from Documento d where "
+	@Query("select d from Documento d where eliminado = 0 and "
 			+"(:nombre is null or d.nombre LIKE CONCAT('%',:nombre,'%')) and"
 			+"(:hasIdEntidad is null or d.entidad.id in (:idEntidad)) and "
 			+"(:hasIdMateria is null or d.materia.id in (:idMateria)) and "
@@ -27,10 +27,10 @@ public interface DocumentoDao extends CrudRepository<Documento, Integer> {
 			@Param("hasIdNivel") Boolean hasIdNivel,
 			@Param("idNivel") List<Integer> idNivel);
 
-	@Query("select d from Documento d where d.materia.id in (:idMateria)")
+	@Query("select d from Documento d where eliminado = 0 and d.materia.id in (:idMateria)")
 	List<Documento> buscarPorIdMateria(@Param("idMateria") Integer idMateria);
 
-	@Query("select d from Documento d where d.entidad.id in (:idEntidad)")
+	@Query("select d from Documento d where eliminado = 0 and d.entidad.id in (:idEntidad)")
 	List<Documento> buscarPorIdEntidad(@Param("idEntidad") Integer idEntidad);
 
 

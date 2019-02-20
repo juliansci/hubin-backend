@@ -156,6 +156,8 @@ public class DocumentoService {
         Documento documento = documentoDao.findOne(id);
         if (documento == null)
             throw new InvalidDocumentoException("Documento inexistente");
+        if (documento.isEliminado())
+            throw new InvalidDocumentoException("Documento eliminado");
 
         if (file.getSize() > 0) {
             Long maxSize = 10000000L;
@@ -182,6 +184,9 @@ public class DocumentoService {
         Documento documento = documentoDao.findOne(idDocumento);
         if (documento == null)
             throw new InvalidDocumentoException("Documento inexistente");
+        if (documento.isEliminado())
+            throw new InvalidDocumentoException("Documento eliminado");
+
         return new DocumentoResponseDTO(documento);
     }
 
@@ -189,6 +194,9 @@ public class DocumentoService {
         Documento documento = documentoDao.findOne(idDocumento);
         if (documento == null)
             throw new InvalidDocumentoException("Documento inexistente");
+        if (documento.isEliminado())
+            throw new InvalidDocumentoException("Documento eliminado");
+
         List<File> versiones = documento.getVersiones();
         for (File version : versiones) {
             if (version.getId().equals(idVersion)) {
@@ -221,6 +229,8 @@ public class DocumentoService {
         Documento documento = documentoDao.findOne(idDocumento);
         if (documento == null)
             throw new InvalidDocumentoException("Documento desconocido");
+        if (documento.isEliminado())
+            throw new InvalidDocumentoException("Documento eliminado");
 
         List<Comentario> comentarios = comentarioDao.findByDocumentoOrderByIdDesc(documento);
         List<ComentarioResponseDTO> comentariosResponse = new ArrayList<ComentarioResponseDTO>();
@@ -235,6 +245,9 @@ public class DocumentoService {
         if (documento == null) {
             throw new InvalidDocumentoException("Documento inexistente");
         }
+        if (documento.isEliminado())
+            throw new InvalidDocumentoException("Documento eliminado");
+
         List<Documento> documentosRelacionadosEntidad = documentoDao.buscarPorIdEntidad(documento.getEntidad().getId());
         documentosRelacionadosEntidad.remove(documento);
         List<Documento> documentosRelacionadosMateria = documentoDao.buscarPorIdMateria(documento.getMateria().getId());
@@ -247,5 +260,42 @@ public class DocumentoService {
             documentosResponse.add(new DocumentoResponseDTO(documentoActual));
         }
         return documentosResponse;
+    }
+
+
+    public void deleteDocumento(int id) throws InvalidDocumentoException {
+        Documento documento = documentoDao.findOne(id);
+        if (documento == null)
+            throw new InvalidDocumentoException("Documento inexistente");
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Alumno alumno = alumnoDao.findByUsername(userDetails.getUsername());
+        if (alumno == null)
+            throw new InvalidDocumentoException("Alumno no logueado");
+
+        if(documento.getCreador().getId() != alumno.getId()){
+            throw new InvalidDocumentoException("Documento inexistente");
+        }
+        documento.setEliminado(true);
+        documentoDao.save(documento);
+        return;
+    }
+
+    public void restoreDocumento(int id) throws InvalidDocumentoException {
+        Documento documento = documentoDao.findOne(id);
+        if (documento == null)
+            throw new InvalidDocumentoException("Documento inexistente");
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Alumno alumno = alumnoDao.findByUsername(userDetails.getUsername());
+        if (alumno == null)
+            throw new InvalidDocumentoException("Alumno no logueado");
+
+        if(documento.getCreador().getId() != alumno.getId()){
+            throw new InvalidDocumentoException("Documento inexistente");
+        }
+        documento.setEliminado(false);
+        documentoDao.save(documento);
+        return;
     }
 }
