@@ -298,4 +298,25 @@ public class DocumentoService {
         documentoDao.save(documento);
         return;
     }
+
+    public void removeVersionDocumento(int idDocumento, int idVersion) throws InvalidDocumentoException {
+        Documento documento = documentoDao.findOne(idDocumento);
+        if (documento == null)
+            throw new InvalidDocumentoException("Documento inexistente");
+        if (documento.isEliminado())
+            throw new InvalidDocumentoException("Documento eliminado");
+
+        if(documento.getVersiones().size() <= 1){
+            throw new InvalidDocumentoException("El documento debe tener como mínimo una versión activa");
+        }
+        File versionToRemove = null;
+        List<File> versiones = documento.getVersiones();
+        for (File version : versiones) {
+            if (version.getId().equals(idVersion)) {
+                versionToRemove = version;
+            }
+        }
+        documento.getVersiones().remove(versionToRemove);
+        documentoDao.save(documento);
+    }
 }

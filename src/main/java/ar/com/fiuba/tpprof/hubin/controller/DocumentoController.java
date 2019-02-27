@@ -93,4 +93,11 @@ public class DocumentoController {
 	public void restoreDocumento(@PathVariable("idDocumento") int id) throws InvalidDocumentoException {
 		documentoService.restoreDocumento(id);
 	}
+	@RequestMapping(value="/{idDocumento}/version/{idVersion}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public void removeVersionDocumento(@PathVariable("idDocumento") int idDocumento, @PathVariable("idVersion") int idVersion) throws InvalidDocumentoException {
+		documentoService.removeVersionDocumento(idDocumento, idVersion);
+
+	}
 }
+
