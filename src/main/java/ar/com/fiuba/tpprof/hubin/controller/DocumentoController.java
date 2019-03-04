@@ -2,6 +2,7 @@ package ar.com.fiuba.tpprof.hubin.controller;
 
 import java.util.List;
 
+import ar.com.fiuba.tpprof.hubin.dto.*;
 import ar.com.fiuba.tpprof.hubin.exception.InvalidProveedorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import ar.com.fiuba.tpprof.hubin.dto.ComentarioResponseDTO;
-import ar.com.fiuba.tpprof.hubin.dto.DocumentoRequestDTO;
-import ar.com.fiuba.tpprof.hubin.dto.DocumentoResponseDTO;
-import ar.com.fiuba.tpprof.hubin.dto.FileResponseDTO;
 import ar.com.fiuba.tpprof.hubin.exception.InvalidDocumentoException;
 import ar.com.fiuba.tpprof.hubin.service.DocumentoService;
 
@@ -97,7 +94,25 @@ public class DocumentoController {
 	@ResponseBody
 	public void removeVersionDocumento(@PathVariable("idDocumento") int idDocumento, @PathVariable("idVersion") int idVersion) throws InvalidDocumentoException {
 		documentoService.removeVersionDocumento(idDocumento, idVersion);
+	}
 
+	@RequestMapping(value="/compartir/alumnos/{idDocumento}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<AlumnoCompartirResponseDTO> getAlumnosCompartirDocumento(@PathVariable("idDocumento") int idDocumento) throws InvalidDocumentoException {
+		return documentoService.getAlumnosCompartir(idDocumento);
+	}
+
+
+	@RequestMapping(value="/shared/{idDocumento}/alumno/{idAlumno}", method = RequestMethod.POST)
+	@ResponseBody
+	public DocumentoResponseDTO addAlumnoSharedDocumento(@PathVariable("idDocumento") int idDocumento, @PathVariable("idAlumno") int idAlumno) throws InvalidDocumentoException {
+		return documentoService.addAlumnoShared(idDocumento, idAlumno);
+	}
+
+	@RequestMapping(value="/shared/{idDocumento}/alumno/{idAlumno}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public DocumentoResponseDTO removeAlumnoSharedDocumento(@PathVariable("idDocumento") int idDocumento, @PathVariable("idAlumno") int idAlumno) throws InvalidDocumentoException {
+		return documentoService.removeAlumnoShared(idDocumento, idAlumno);
 	}
 }
 

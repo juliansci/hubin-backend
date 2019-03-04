@@ -2,6 +2,7 @@ package ar.com.fiuba.tpprof.hubin.controller;
 
 import java.util.List;
 
+import ar.com.fiuba.tpprof.hubin.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,11 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import ar.com.fiuba.tpprof.hubin.dto.AlumnoDocumentosResponseDTO;
-import ar.com.fiuba.tpprof.hubin.dto.AlumnoRequestDTO;
-import ar.com.fiuba.tpprof.hubin.dto.AlumnoResponseDTO;
-import ar.com.fiuba.tpprof.hubin.dto.AlumnoUpdateRequestDTO;
-import ar.com.fiuba.tpprof.hubin.dto.PuntuacionResponseDTO;
 import ar.com.fiuba.tpprof.hubin.exception.InvalidAlumnoException;
 import ar.com.fiuba.tpprof.hubin.service.AlumnoService;
 import org.springframework.web.multipart.MultipartFile;
@@ -66,8 +62,8 @@ public class AlumnoController {
 
     @RequestMapping(value = "/{id}/profile/image", method = RequestMethod.POST, consumes = {"multipart/form-data"})
     @ResponseBody
-    public AlumnoResponseDTO addImageProfile(@PathVariable("id") int id, @RequestParam("profileImage") MultipartFile profileImage)  throws InvalidAlumnoException{
-            return alumnoService.addImageProfile(id, profileImage);
+    public AlumnoResponseDTO addImageProfile(@PathVariable("id") int id, @RequestParam("profileImage") MultipartFile profileImage) throws InvalidAlumnoException {
+        return alumnoService.addImageProfile(id, profileImage);
     }
 
     @RequestMapping(value = "/puntuaciones", method = RequestMethod.GET)

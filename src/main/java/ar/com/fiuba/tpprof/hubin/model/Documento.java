@@ -225,6 +225,9 @@ public class Documento {
     public void addCompartido(Alumno alumno) {
         compartidos.add(alumno);
     }
+    public void removeCompartido(Alumno alumno) {
+        compartidos.remove(alumno);
+    }
 
     public Integer getPuntuacionCantidad() {
         return puntuacionCantidad;

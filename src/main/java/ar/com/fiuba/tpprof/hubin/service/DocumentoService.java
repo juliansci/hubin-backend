@@ -2,17 +2,16 @@ package ar.com.fiuba.tpprof.hubin.service;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
+import ar.com.fiuba.tpprof.hubin.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import ar.com.fiuba.tpprof.hubin.dto.ComentarioResponseDTO;
-import ar.com.fiuba.tpprof.hubin.dto.DocumentoRequestDTO;
-import ar.com.fiuba.tpprof.hubin.dto.DocumentoResponseDTO;
-import ar.com.fiuba.tpprof.hubin.dto.FileResponseDTO;
 import ar.com.fiuba.tpprof.hubin.exception.InvalidDocumentoException;
 import ar.com.fiuba.tpprof.hubin.model.Alumno;
 import ar.com.fiuba.tpprof.hubin.model.Comentario;
@@ -273,7 +272,7 @@ public class DocumentoService {
         if (alumno == null)
             throw new InvalidDocumentoException("Alumno no logueado");
 
-        if(documento.getCreador().getId() != alumno.getId()){
+        if (documento.getCreador().getId() != alumno.getId()) {
             throw new InvalidDocumentoException("Documento inexistente");
         }
         documento.setEliminado(true);
@@ -291,7 +290,7 @@ public class DocumentoService {
         if (alumno == null)
             throw new InvalidDocumentoException("Alumno no logueado");
 
-        if(documento.getCreador().getId() != alumno.getId()){
+        if (documento.getCreador().getId() != alumno.getId()) {
             throw new InvalidDocumentoException("Documento inexistente");
         }
         documento.setEliminado(false);
@@ -306,7 +305,7 @@ public class DocumentoService {
         if (documento.isEliminado())
             throw new InvalidDocumentoException("Documento eliminado");
 
-        if(documento.getVersiones().size() <= 1){
+        if (documento.getVersiones().size() <= 1) {
             throw new InvalidDocumentoException("El documento debe tener como mínimo una versión activa");
         }
         File versionToRemove = null;
@@ -318,5 +317,49 @@ public class DocumentoService {
         }
         documento.getVersiones().remove(versionToRemove);
         documentoDao.save(documento);
+    }
+
+    public List<AlumnoCompartirResponseDTO> getAlumnosCompartir(int idDocumento) throws InvalidDocumentoException {
+        Documento documento = documentoDao.findOne(idDocumento);
+        if (documento == null)
+            throw new InvalidDocumentoException("Documento inexistente");
+        List<AlumnoCompartirResponseDTO> alumnosResponse = new ArrayList<>();
+        for (Alumno alumno: alumnoDao.findAll()) {
+            if(alumno.getId() != documento.getCreador().getId() &&
+               !documento.getCompartidos().contains(alumno)){
+                AlumnoCompartirResponseDTO alumnoCompartir = new AlumnoCompartirResponseDTO(alumno);
+                alumnosResponse.add(alumnoCompartir);
+            }
+        }
+        return alumnosResponse;
+    }
+
+    public DocumentoResponseDTO addAlumnoShared(int idDocumento, int idAlumno) throws InvalidDocumentoException {
+        Documento documento = documentoDao.findOne(idDocumento);
+        if (documento == null)
+            throw new InvalidDocumentoException("Documento inexistente");
+        Alumno alumno = alumnoDao.findOne(idAlumno);
+        if (alumno == null)
+            throw new InvalidDocumentoException("Alumno inexistente");
+        if(!documento.getCompartidos().contains(alumno)){
+            documento.addCompartido(alumno);
+            documentoDao.save(documento);
+        }
+
+        return new DocumentoResponseDTO(documento);
+    }
+
+    public DocumentoResponseDTO removeAlumnoShared(int idDocumento, int idAlumno) throws InvalidDocumentoException {
+        Documento documento = documentoDao.findOne(idDocumento);
+        if (documento == null)
+            throw new InvalidDocumentoException("Documento inexistente");
+        Alumno alumno = alumnoDao.findOne(idAlumno);
+        if (alumno == null)
+            throw new InvalidDocumentoException("Alumno inexistente");
+        if(documento.getCompartidos().contains(alumno)){
+            documento.removeCompartido(alumno);
+            documentoDao.save(documento);
+        }
+        return new DocumentoResponseDTO(documento);
     }
 }
