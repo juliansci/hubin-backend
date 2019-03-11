@@ -18,26 +18,29 @@ import ar.com.fiuba.tpprof.hubin.repository.PuntuacionDao;
 
 @Service
 public class PuntuacionService {
-	
+
 	@Autowired
 	private PuntuacionDao puntuacionDao;
-	
+
 	@Autowired
 	private AlumnoDao alumnoDao;
-	
+
 	@Autowired
     private DocumentoDao documentoDao;
 
+	@Autowired
+	private ObjetivoAlumnoService objetivoAlumnoService;
+
 	public void crearPuntuacion(PuntuacionRequestDTO puntuacionRequestDTO) throws InvalidPuntuacionException {
-		
+
 		if (!puntuacionRequestDTO.isValid())
 			throw new InvalidPuntuacionException("Datos incompletos");
-		
+
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Alumno alumno = alumnoDao.findByUsername(userDetails.getUsername());
 		if (alumno == null)
 			throw new InvalidPuntuacionException("Alumno desconocido");
-		
+
 		Documento documento = documentoDao.findOne(Integer.parseInt(puntuacionRequestDTO.getIdDocumento()));
 		if (documento == null)
 			throw new InvalidPuntuacionException("Documento desconocido");
@@ -59,7 +62,7 @@ public class PuntuacionService {
 		documento.setPuntuacion(totalPuntuacion);
 		documento.setPuntuacionCantidad(puntuaciones.size());
 		documentoDao.save(documento);
-		
+		objetivoAlumnoService.checkScore(alumno);
 	}
 
 }

@@ -82,3 +82,16 @@ insert into version (documento_id, file_id)
   (7,16),
   (8,17),
   (9,18);
+
+insert into proveedor (id, cuit, razonSocial, direccion, telefono, email) VALUES
+(1, '234433424', 'Libreria del Sur', 'Esparsek 292', '1143555049', 'libreriadelsur@gmail.com'),
+(2, '264533524', 'Instituto privado Villa Monica', 'San Martin 3392', '1145455089', 'instituto@villa-monica.com');
+
+insert into objetivo (nombre, tipo, activo, descripcion, proveedor_id, orden) VALUES
+('Primer comentario', 'comment_1', 1, 'Primer comentario en la plataforma.', NULL, 3),
+('Quinto comentario', 'comment_5', 1, 'Quinto comentario en la plataforma.', NULL, 6),
+('Primer documento', 'upload_1', 1, 'Suba su primer documento a la plataforma.', NULL, 2),
+('Quinto documento', 'upload_5', 1, 'Suba su quinto documento a la plataforma.', NULL, 5),
+('Actualizacion perfil', 'update_profile', 1, 'Actualice su perfil.', NULL, 1),
+('Primera calificacion documento', 'rate_1', 1, 'Califique un documento.', NULL, 4),
+('Quinta calificacion documento', 'rate_5', 1, 'Califique 5 veces.', NULL, 7);

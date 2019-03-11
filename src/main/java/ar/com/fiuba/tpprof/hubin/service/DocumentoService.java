@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 import ar.com.fiuba.tpprof.hubin.dto.*;
+import ar.com.fiuba.tpprof.hubin.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,14 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import ar.com.fiuba.tpprof.hubin.exception.InvalidDocumentoException;
-import ar.com.fiuba.tpprof.hubin.model.Alumno;
-import ar.com.fiuba.tpprof.hubin.model.Comentario;
-import ar.com.fiuba.tpprof.hubin.model.Documento;
-import ar.com.fiuba.tpprof.hubin.model.Entidad;
-import ar.com.fiuba.tpprof.hubin.model.File;
-import ar.com.fiuba.tpprof.hubin.model.Idioma;
-import ar.com.fiuba.tpprof.hubin.model.Materia;
-import ar.com.fiuba.tpprof.hubin.model.Nivel;
 import ar.com.fiuba.tpprof.hubin.repository.AlumnoDao;
 import ar.com.fiuba.tpprof.hubin.repository.ComentarioDao;
 import ar.com.fiuba.tpprof.hubin.repository.DocumentoDao;
@@ -53,6 +46,10 @@ public class DocumentoService {
 
     @Autowired
     private ComentarioDao comentarioDao;
+
+
+    @Autowired
+    private ObjetivoAlumnoService objetivoAlumnoService;
 
     public DocumentoResponseDTO crearDocumento(DocumentoRequestDTO documentoRequestDTO) throws InvalidDocumentoException {
 
@@ -95,7 +92,7 @@ public class DocumentoService {
         documento.setNivel(nivel);
 
         documentoDao.save(documento);
-
+        objetivoAlumnoService.checkUploads(alumno);
         return new DocumentoResponseDTO(documento);
     }
 

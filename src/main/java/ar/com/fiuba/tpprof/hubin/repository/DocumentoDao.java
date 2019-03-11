@@ -2,6 +2,7 @@ package ar.com.fiuba.tpprof.hubin.repository;
 
 import java.util.List;
 
+import ar.com.fiuba.tpprof.hubin.model.Alumno;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -33,5 +34,5 @@ public interface DocumentoDao extends CrudRepository<Documento, Integer> {
 	@Query("select d from Documento d where eliminado = 0 and d.entidad.id in (:idEntidad)")
 	List<Documento> buscarPorIdEntidad(@Param("idEntidad") Integer idEntidad);
 
-
+	List<Documento> findByCreador(Alumno alumno);
 }

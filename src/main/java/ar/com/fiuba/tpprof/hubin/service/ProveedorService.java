@@ -17,20 +17,20 @@ import ar.com.fiuba.tpprof.hubin.repository.PublicidadDao;
 
 @Service
 public class ProveedorService {
-	
+
 	@Autowired
 	private ProveedorDao proveedorDao;
-	
+
 	@Autowired
 	private PublicidadDao publicidadDao;
-	
+
 	@Autowired
 	private ObjetivoDao objetivoDao;
-	
+
 	public Proveedor crearProveedor(Proveedor proveedor){
 		return proveedorDao.save(proveedor);
 	}
-	
+
 	public Proveedor updateProveedor(int id, Proveedor p) throws InvalidProveedorException {
 		Proveedor proveedor = proveedorDao.findOne(id);
 		if (proveedor == null)
@@ -39,32 +39,32 @@ public class ProveedorService {
 		proveedor.setRazonSocial(p.getRazonSocial());
 		proveedor.setDireccion(p.getDireccion());
 		proveedor.setTelefono(p.getTelefono());
-		proveedor.setEmail(p.getEmail());		
+		proveedor.setEmail(p.getEmail());
 		return proveedorDao.save(proveedor);
 	}
-	
+
 	public void deleteProveedor(int id) throws InvalidProveedorException {
 		Proveedor proveedor = proveedorDao.findOne(id);
 		if (proveedor == null)
 			throw new InvalidProveedorException("Proveedor desconocido");
 		proveedorDao.delete(proveedor);
 	}
-	
+
 	public Proveedor getProveedor(int id) throws InvalidProveedorException {
 		Proveedor proveedor = proveedorDao.findOne(id);
 		if (proveedor == null)
 			throw new InvalidProveedorException("Proveedor desconocido");
 		return proveedor;
 	}
-	
+
 	public Publicidad crearPublicidad(int id, Publicidad publicidad) throws InvalidProveedorException {
 		Proveedor proveedor = proveedorDao.findOne(id);
 		if (proveedor == null)
 			throw new InvalidProveedorException("Proveedor desconocido");
-		publicidad.setProveedor(proveedor);		
+		publicidad.setProveedor(proveedor);
 		return publicidadDao.save(publicidad);
 	}
-	
+
 	public Publicidad getPublicidad(int idProveedor, int idPublicidad) throws InvalidProveedorException,  InvalidPublicidadException{
 		Proveedor proveedor = proveedorDao.findOne(idProveedor);
 		if (proveedor == null)
@@ -77,7 +77,7 @@ public class ProveedorService {
 		}
 		throw new InvalidPublicidadException("Publicidad desconocida");
 	}
-	
+
 	public Publicidad updatePublicidad(int idProveedor, int idPublicidad, Publicidad p) throws InvalidProveedorException,  InvalidPublicidadException{
 		Proveedor proveedor = proveedorDao.findOne(idProveedor);
 		if (proveedor == null)
@@ -94,7 +94,7 @@ public class ProveedorService {
 		}
 		throw new InvalidPublicidadException("Publicidad desconocida");
 	}
-	
+
 	public void deletetPublicidad(int idProveedor, int idPublicidad) throws InvalidProveedorException,  InvalidPublicidadException{
 		Proveedor proveedor = proveedorDao.findOne(idProveedor);
 		if (proveedor == null)
@@ -109,15 +109,15 @@ public class ProveedorService {
 		}
 		throw new InvalidPublicidadException("Publicidad desconocida");
 	}
-	
+
 	public Objetivo crearObjetivo(int id, Objetivo objetivo) throws InvalidProveedorException {
 		Proveedor proveedor = proveedorDao.findOne(id);
 		if (proveedor == null)
 			throw new InvalidProveedorException("Proveedor desconocido");
-		objetivo.setProveedor(proveedor);		
+		objetivo.setProveedor(proveedor);
 		return objetivoDao.save(objetivo);
 	}
-	
+
 	public Objetivo getObjetivo(int idProveedor, int idObjetivo) throws InvalidProveedorException,  InvalidObjetivoException{
 		Proveedor proveedor = proveedorDao.findOne(idProveedor);
 		if (proveedor == null)
@@ -130,7 +130,7 @@ public class ProveedorService {
 		}
 		throw new InvalidObjetivoException("Objetivo desconocido");
 	}
-	
+
 	public Objetivo updateObjetivo(int idProveedor, int idObjetivo, Objetivo o) throws InvalidProveedorException, InvalidObjetivoException{
 		Proveedor proveedor = proveedorDao.findOne(idProveedor);
 		if (proveedor == null)
@@ -139,15 +139,14 @@ public class ProveedorService {
 		for(Objetivo objetivo : objetivos) {
 			if (objetivo.getId().equals(idObjetivo)) {
 				objetivo.setNombre(o.getNombre());
-				objetivo.setActiva(o.isActiva());
+				objetivo.setActivo(o.isActivo());
 				objetivo.setDescripcion(o.getDescripcion());
-				objetivo.setPtosTotales(o.getPtosTotales());
 				return objetivoDao.save(objetivo);
 			}
 		}
 		throw new InvalidObjetivoException("Objetivo desconocido");
 	}
-	
+
 	public void deleteObjetivo(int idProveedor, int idObjetivo) throws InvalidProveedorException, InvalidObjetivoException{
 		Proveedor proveedor = proveedorDao.findOne(idProveedor);
 		if (proveedor == null)

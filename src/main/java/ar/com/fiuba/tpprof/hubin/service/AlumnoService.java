@@ -34,6 +34,9 @@ public class AlumnoService {
     @Autowired
     private PuntuacionDao puntuacionDao;
 
+    @Autowired
+    private ObjetivoAlumnoService objetivoAlumnoService;
+
     public AlumnoResponseDTO crearAlumno(AlumnoRequestDTO alumnoRequestDTO) throws InvalidAlumnoException {
         if (alumnoRequestDTO.getUsername() == null || alumnoRequestDTO.getPassword() == null) {
             throw new InvalidAlumnoException("Datos incompletos");
@@ -84,6 +87,7 @@ public class AlumnoService {
             throw new InvalidAlumnoException("Formato de fecha incorrecto");
         }
         alumnoDao.save(alumno);
+        objetivoAlumnoService.checkProfile(alumno);
         return new AlumnoResponseDTO(alumno);
     }
 
