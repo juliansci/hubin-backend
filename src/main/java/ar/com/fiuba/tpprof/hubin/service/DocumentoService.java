@@ -47,6 +47,9 @@ public class DocumentoService {
     @Autowired
     private ComentarioDao comentarioDao;
 
+    @Autowired
+    private NotificacionService notificacionService;
+
 
     @Autowired
     private ObjetivoAlumnoService objetivoAlumnoService;
@@ -93,6 +96,7 @@ public class DocumentoService {
 
         documentoDao.save(documento);
         objetivoAlumnoService.checkUploads(alumno);
+        notificacionService.notificarNuevoDocumento(materia);
         return new DocumentoResponseDTO(documento);
     }
 
@@ -104,20 +108,6 @@ public class DocumentoService {
         Documento documento = documentoDao.findOne(id);
         if (documento == null)
             throw new InvalidDocumentoException("Documento inexistente");
-
-       /*if (!documentoRequestDTO.getCompartidos().isEmpty()) {
-            for (String idAlumno : documentoRequestDTO.getCompartidos()) {
-                Alumno alumno = alumnoDao.findOne(Integer.parseInt(idAlumno));
-                if (alumno == null) {
-                    throw new InvalidDocumentoException("Alumno a compartir desconocido");
-                } else {
-                    List<Alumno> compartidos = documento.getCompartidos();
-                    if (!compartidos.contains(alumno)) {
-                        compartidos.add(alumno);
-                    }
-                }
-            }
-        }*/
 
         Materia materia = materiaDao.findOne(Integer.parseInt(documentoRequestDTO.getIdMateria()));
         if (materia == null)
@@ -143,6 +133,7 @@ public class DocumentoService {
         documento.setDescripcion(documentoRequestDTO.getDescripcion());
 
         documentoDao.save(documento);
+        notificacionService.notificarActualizacion(documento);
 
         return new DocumentoResponseDTO(documento);
     }
@@ -321,9 +312,9 @@ public class DocumentoService {
         if (documento == null)
             throw new InvalidDocumentoException("Documento inexistente");
         List<AlumnoCompartirResponseDTO> alumnosResponse = new ArrayList<>();
-        for (Alumno alumno: alumnoDao.findAll()) {
-            if(alumno.getId() != documento.getCreador().getId() &&
-               !documento.getCompartidos().contains(alumno)){
+        for (Alumno alumno : alumnoDao.findAll()) {
+            if (alumno.getId() != documento.getCreador().getId() &&
+                    !documento.getCompartidos().contains(alumno)) {
                 AlumnoCompartirResponseDTO alumnoCompartir = new AlumnoCompartirResponseDTO(alumno);
                 alumnosResponse.add(alumnoCompartir);
             }
@@ -338,7 +329,7 @@ public class DocumentoService {
         Alumno alumno = alumnoDao.findOne(idAlumno);
         if (alumno == null)
             throw new InvalidDocumentoException("Alumno inexistente");
-        if(!documento.getCompartidos().contains(alumno)){
+        if (!documento.getCompartidos().contains(alumno)) {
             documento.addCompartido(alumno);
             documentoDao.save(documento);
         }
@@ -353,7 +344,7 @@ public class DocumentoService {
         Alumno alumno = alumnoDao.findOne(idAlumno);
         if (alumno == null)
             throw new InvalidDocumentoException("Alumno inexistente");
-        if(documento.getCompartidos().contains(alumno)){
+        if (documento.getCompartidos().contains(alumno)) {
             documento.removeCompartido(alumno);
             documentoDao.save(documento);
         }

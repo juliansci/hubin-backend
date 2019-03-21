@@ -36,6 +36,8 @@ public class ComentarioService {
 	@Autowired
 	private ObjetivoAlumnoService objetivoAlumnoService;
 
+	@Autowired
+	private NotificacionService notificacionService;
 	public void crearComentario(ComentarioRequestDTO comentarioRequestDTO) throws InvalidComentarioException {
 
 		if (!comentarioRequestDTO.isValid())
@@ -55,6 +57,7 @@ public class ComentarioService {
 		comentario.setDocumento(documento);
 		comentarioDao.save(comentario);
 		objetivoAlumnoService.checkComments(alumno);
+		notificacionService.notificarNuevoComentario(documento);
 	}
 
 	public void crearComentario(ComentarioEntidadRequestDTO comentarioRequestDTO) throws InvalidComentarioException {
@@ -97,5 +100,7 @@ public class ComentarioService {
 		comentario.setMateria(materia);
 		comentarioMateriaDao.save(comentario);
 		objetivoAlumnoService.checkComments(alumno);
+		notificacionService.notificarNuevoComentario(materia);
+
 	}
 }

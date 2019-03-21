@@ -28,7 +28,6 @@ public class AlumnoController {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetails.getUsername();
         return alumnoService.getAlumno(username);
-
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
