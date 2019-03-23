@@ -32,6 +32,7 @@ public class Notificacion {
     private boolean leido;
 
     public Notificacion() {
+        this.fecha = new Date();
     }
 
     public Integer getId() {

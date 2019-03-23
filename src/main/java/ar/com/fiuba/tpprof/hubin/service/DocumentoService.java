@@ -7,6 +7,7 @@ import java.util.List;
 
 import ar.com.fiuba.tpprof.hubin.dto.*;
 import ar.com.fiuba.tpprof.hubin.model.*;
+import ar.com.fiuba.tpprof.hubin.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,13 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import ar.com.fiuba.tpprof.hubin.exception.InvalidDocumentoException;
-import ar.com.fiuba.tpprof.hubin.repository.AlumnoDao;
-import ar.com.fiuba.tpprof.hubin.repository.ComentarioDao;
-import ar.com.fiuba.tpprof.hubin.repository.DocumentoDao;
-import ar.com.fiuba.tpprof.hubin.repository.EntidadDao;
-import ar.com.fiuba.tpprof.hubin.repository.IdiomaDao;
-import ar.com.fiuba.tpprof.hubin.repository.MateriaDao;
-import ar.com.fiuba.tpprof.hubin.repository.NivelDao;
 
 
 @Service
@@ -53,6 +47,9 @@ public class DocumentoService {
 
     @Autowired
     private ObjetivoAlumnoService objetivoAlumnoService;
+
+    @Autowired
+    private AlumnoDocumentoObservableDao alumnoDocumentoObservableDao;
 
     public DocumentoResponseDTO crearDocumento(DocumentoRequestDTO documentoRequestDTO) throws InvalidDocumentoException {
 
@@ -97,6 +94,10 @@ public class DocumentoService {
         documentoDao.save(documento);
         objetivoAlumnoService.checkUploads(alumno);
         notificacionService.notificarNuevoDocumento(materia);
+        AlumnoDocumentoObservable alumnoDocumentoObservable = new AlumnoDocumentoObservable();
+        alumnoDocumentoObservable.setAlumno(alumno);
+        alumnoDocumentoObservable.setDocumento(documento);
+        alumnoDocumentoObservableDao.save(alumnoDocumentoObservable);
         return new DocumentoResponseDTO(documento);
     }
 
@@ -264,6 +265,10 @@ public class DocumentoService {
             throw new InvalidDocumentoException("Documento inexistente");
         }
         documento.setEliminado(true);
+        AlumnoDocumentoObservable alumnoDocumentoObservable = alumnoDocumentoObservableDao.getAlumnoDocumentoObservableByAlumnoAndDocumento(alumno, documento);
+        if (alumnoDocumentoObservable != null) {
+            alumnoDocumentoObservableDao.delete(alumnoDocumentoObservable);
+        }
         documentoDao.save(documento);
         return;
     }

@@ -2,6 +2,7 @@ package ar.com.fiuba.tpprof.hubin.controller;
 
 import ar.com.fiuba.tpprof.hubin.dto.*;
 import ar.com.fiuba.tpprof.hubin.exception.InvalidAlumnoException;
+import ar.com.fiuba.tpprof.hubin.exception.InvalidDocumentoException;
 import ar.com.fiuba.tpprof.hubin.exception.InvalidFeedbackException;
 import ar.com.fiuba.tpprof.hubin.exception.InvalidNotificacionException;
 import ar.com.fiuba.tpprof.hubin.service.AlumnoService;
@@ -24,6 +25,19 @@ public class AlumnoNotificacionController {
     @Autowired
     private NotificacionService notificacionService;
 
+
+    @RequestMapping(value="/notificaciones", method = RequestMethod.GET)
+    @ResponseBody
+    public List<NotificacionResponseDTO> getNotificationsNotificacion() throws InvalidNotificacionException {
+        return notificacionService.getAll();
+    }
+
+
+    @RequestMapping(value="/notificaciones/leida/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public void marcarComoLeida(@PathVariable("id") int id) throws InvalidNotificacionException {
+        notificacionService.marcarComoLeida(id);
+    }
 
 
     @RequestMapping(value="/notificacion/suscripcion", method = RequestMethod.POST)
