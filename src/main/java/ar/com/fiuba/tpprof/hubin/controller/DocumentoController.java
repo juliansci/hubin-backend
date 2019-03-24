@@ -3,6 +3,7 @@ package ar.com.fiuba.tpprof.hubin.controller;
 import java.util.List;
 
 import ar.com.fiuba.tpprof.hubin.dto.*;
+import ar.com.fiuba.tpprof.hubin.exception.InvalidMateriaException;
 import ar.com.fiuba.tpprof.hubin.exception.InvalidProveedorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -114,5 +115,12 @@ public class DocumentoController {
 	public DocumentoResponseDTO removeAlumnoSharedDocumento(@PathVariable("idDocumento") int idDocumento, @PathVariable("idAlumno") int idAlumno) throws InvalidDocumentoException {
 		return documentoService.removeAlumnoShared(idDocumento, idAlumno);
 	}
+
+
+    @RequestMapping(value = "/follow/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Boolean checkFollowMateria(@PathVariable("id") int id) throws InvalidDocumentoException {
+        return documentoService.checkFollow(id);
+    }
 }
 

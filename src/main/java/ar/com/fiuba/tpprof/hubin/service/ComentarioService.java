@@ -57,7 +57,7 @@ public class ComentarioService {
 		comentario.setDocumento(documento);
 		comentarioDao.save(comentario);
 		objetivoAlumnoService.checkComments(alumno);
-		notificacionService.notificarNuevoComentario(documento);
+		notificacionService.notificarNuevoComentario(documento, comentario);
 	}
 
 	public void crearComentario(ComentarioEntidadRequestDTO comentarioRequestDTO) throws InvalidComentarioException {
@@ -100,7 +100,7 @@ public class ComentarioService {
 		comentario.setMateria(materia);
 		comentarioMateriaDao.save(comentario);
 		objetivoAlumnoService.checkComments(alumno);
-		notificacionService.notificarNuevoComentario(materia);
+		notificacionService.notificarNuevoComentario(materia, comentario);
 
 	}
 }

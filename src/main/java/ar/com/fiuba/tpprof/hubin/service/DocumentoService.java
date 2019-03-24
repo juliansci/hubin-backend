@@ -93,7 +93,7 @@ public class DocumentoService {
 
         documentoDao.save(documento);
         objetivoAlumnoService.checkUploads(alumno);
-        notificacionService.notificarNuevoDocumento(materia);
+        notificacionService.notificarNuevoDocumento(documento, materia);
         AlumnoDocumentoObservable alumnoDocumentoObservable = new AlumnoDocumentoObservable();
         alumnoDocumentoObservable.setAlumno(alumno);
         alumnoDocumentoObservable.setDocumento(documento);
@@ -354,5 +354,17 @@ public class DocumentoService {
             documentoDao.save(documento);
         }
         return new DocumentoResponseDTO(documento);
+    }
+
+    public boolean checkFollow(int id) throws InvalidDocumentoException{
+        Documento documento = documentoDao.findOne(id);
+        if (documento == null)
+            throw new InvalidDocumentoException("Documento inexistente");
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Alumno alumno = alumnoDao.findByUsername(userDetails.getUsername());
+        if (alumno == null)
+            throw new InvalidDocumentoException("Alumno desconocido");
+        AlumnoDocumentoObservable alumnoDocumentoObservable = alumnoDocumentoObservableDao.getAlumnoDocumentoObservableByAlumnoAndDocumento(alumno, documento);
+        return (alumnoDocumentoObservable != null);
     }
 }

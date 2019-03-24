@@ -16,6 +16,7 @@ public class MateriaResponseDTO {
     private String id;
 
     private String nombre;
+    private String descripcion;
 
     private String code;
 
@@ -40,7 +41,7 @@ public class MateriaResponseDTO {
             ComentarioMateria comentario = materia.getComentarios().get(i);
             comentarios.add(new ComentarioMateriaResponseDTO(comentario));
         }
-
+        descripcion = materia.getDescripcion();
     }
 
     public String getId() {
@@ -89,5 +90,13 @@ public class MateriaResponseDTO {
 
     public void setComentarios(List<ComentarioMateriaResponseDTO> comentarios) {
         this.comentarios = comentarios;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 }

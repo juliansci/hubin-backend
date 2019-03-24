@@ -22,6 +22,10 @@ public class Materia {
 
     private String code;
 
+
+    @Column(columnDefinition = "TEXT")
+    private String descripcion;
+
     private boolean destacada;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = {javax.persistence.CascadeType.MERGE})
@@ -40,6 +44,7 @@ public class Materia {
 
 
     public Materia() {
+        this.descripcion = "";
     }
 
     public Integer getId() {
@@ -100,5 +105,13 @@ public class Materia {
 
     public void setComentarios(List<ComentarioMateria> comentarios) {
         this.comentarios = comentarios;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 }

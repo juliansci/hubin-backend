@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,47 +57,58 @@ public class NotificacionService {
         notificacionDao.save(notificacion);
     }
 
-    public void notificarNuevoComentario(Documento documento) {
+    public void notificarNuevoComentario(Documento documento, Comentario comentario) {
         for (AlumnoDocumentoObservable alumnoDocObservable : alumnoDocumentoObservableDao.getAllByDocumento(documento)) {
             Alumno alumno = alumnoDocObservable.getAlumno();
-            Notificacion notificacion = new Notificacion();
-            notificacion.setAlumno(alumno);
-            notificacion.setDocumentoRelacionado(documento);
-            notificacion.setEvento(Notificacion.EVENT_COMMENT);
-            notificacionDao.save(notificacion);
+            if (!alumno.getId().equals(comentario.getCreador().getId())) {
+                Notificacion notificacion = new Notificacion();
+                notificacion.setAlumno(alumno);
+                notificacion.setDocumentoRelacionado(documento);
+                notificacion.setEvento(Notificacion.EVENT_COMMENT);
+                notificacionDao.save(notificacion);
+            }
+
         }
     }
 
     public void notificarActualizacion(Documento documento) {
         for (AlumnoDocumentoObservable alumnoDocObservable : alumnoDocumentoObservableDao.getAllByDocumento(documento)) {
             Alumno alumno = alumnoDocObservable.getAlumno();
-            Notificacion notificacion = new Notificacion();
-            notificacion.setAlumno(alumno);
-            notificacion.setDocumentoRelacionado(documento);
-            notificacion.setEvento(Notificacion.EVENT_UPDATE);
-            notificacionDao.save(notificacion);
+            if (!alumno.getId().equals(documento.getCreador().getId())) {
+                Notificacion notificacion = new Notificacion();
+                notificacion.setAlumno(alumno);
+                notificacion.setDocumentoRelacionado(documento);
+                notificacion.setEvento(Notificacion.EVENT_UPDATE);
+                notificacionDao.save(notificacion);
+            }
+
         }
     }
 
-    public void notificarNuevoComentario(Materia materia) {
+    public void notificarNuevoComentario(Materia materia, ComentarioMateria comentario) {
         for (AlumnoMateriaObservable alumnoMatObservable : alumnoMateriaObservableDao.getAllByMateria(materia)) {
             Alumno alumno = alumnoMatObservable.getAlumno();
-            Notificacion notificacion = new Notificacion();
-            notificacion.setAlumno(alumno);
-            notificacion.setMateriaRelacionada(materia);
-            notificacion.setEvento(Notificacion.EVENT_COMMENT);
-            notificacionDao.save(notificacion);
+            if (!alumno.getId().equals(comentario.getCreador().getId())) {
+                Notificacion notificacion = new Notificacion();
+                notificacion.setAlumno(alumno);
+                notificacion.setMateriaRelacionada(materia);
+                notificacion.setEvento(Notificacion.EVENT_COMMENT);
+                notificacionDao.save(notificacion);
+            }
         }
     }
 
-    public void notificarNuevoDocumento(Materia materia) {
+    public void notificarNuevoDocumento(Documento documento, Materia materia) {
         for (AlumnoMateriaObservable alumnoMatObservable : alumnoMateriaObservableDao.getAllByMateria(materia)) {
             Alumno alumno = alumnoMatObservable.getAlumno();
-            Notificacion notificacion = new Notificacion();
-            notificacion.setAlumno(alumno);
-            notificacion.setMateriaRelacionada(materia);
-            notificacion.setEvento(Notificacion.EVENT_NEW_DOCUMENT);
-            notificacionDao.save(notificacion);
+            if (!documento.getCreador().getId().equals(alumno.getId())) {
+                Notificacion notificacion = new Notificacion();
+                notificacion.setAlumno(alumno);
+                notificacion.setMateriaRelacionada(materia);
+                notificacion.setEvento(Notificacion.EVENT_NEW_DOCUMENT);
+                notificacionDao.save(notificacion);
+            }
+
         }
     }
 
@@ -114,7 +124,7 @@ public class NotificacionService {
             throw new InvalidNotificacionException("Parametros invalidos");
         }
         if (documentoId != null && !documentoId.isEmpty()) {
-            Documento documento = documentoDao.findOne(Integer.getInteger(documentoId));
+            Documento documento = documentoDao.findOne(Integer.parseInt(documentoId));
             AlumnoDocumentoObservable alumnoDocumentoObservable = alumnoDocumentoObservableDao.getAlumnoDocumentoObservableByAlumnoAndDocumento(alumno, documento);
             if (alumnoDocumentoObservable == null) {
                 alumnoDocumentoObservable = new AlumnoDocumentoObservable();
@@ -124,7 +134,7 @@ public class NotificacionService {
             }
         }
         if (materiaId != null && !materiaId.isEmpty()) {
-            Materia materia = materiaDao.findOne(Integer.getInteger(materiaId));
+            Materia materia = materiaDao.findOne(Integer.parseInt(materiaId));
             AlumnoMateriaObservable alumnoMateriaObservable = alumnoMateriaObservableDao.getAlumnoMateriaObservableByAlumnoAndMateria(alumno, materia);
             if (alumnoMateriaObservable == null) {
                 alumnoMateriaObservable = new AlumnoMateriaObservable();
@@ -147,14 +157,14 @@ public class NotificacionService {
             throw new InvalidNotificacionException("Parametros invalidos");
         }
         if (documentoId != null && !documentoId.isEmpty()) {
-            Documento documento = documentoDao.findOne(Integer.getInteger(documentoId));
+            Documento documento = documentoDao.findOne(Integer.parseInt(documentoId));
             AlumnoDocumentoObservable alumnoDocumentoObservable = alumnoDocumentoObservableDao.getAlumnoDocumentoObservableByAlumnoAndDocumento(alumno, documento);
             if (alumnoDocumentoObservable != null) {
                 alumnoDocumentoObservableDao.delete(alumnoDocumentoObservable);
             }
         }
         if (materiaId != null && !materiaId.isEmpty()) {
-            Materia materia = materiaDao.findOne(Integer.getInteger(materiaId));
+            Materia materia = materiaDao.findOne(Integer.parseInt(materiaId));
             AlumnoMateriaObservable alumnoMateriaObservable = alumnoMateriaObservableDao.getAlumnoMateriaObservableByAlumnoAndMateria(alumno, materia);
             if (alumnoMateriaObservable != null) {
                 alumnoMateriaObservableDao.delete(alumnoMateriaObservable);

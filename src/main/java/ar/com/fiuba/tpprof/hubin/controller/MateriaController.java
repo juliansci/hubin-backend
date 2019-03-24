@@ -18,26 +18,32 @@ import ar.com.fiuba.tpprof.hubin.service.MateriaService;
 @CrossOrigin
 @RequestMapping(value = "/materia", consumes = "application/json", produces = "application/json")
 public class MateriaController {
-	
+
 	@Autowired
 	private MateriaService materiaService;
-	
+
 	@RequestMapping(value="/destacadas", method = RequestMethod.GET)
 	@ResponseBody
 	public List<MateriaResponseDTO> getMateriasDestacadas() {
 		return materiaService.getMateriasDestacadas();
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public List<MateriaResponseDTO> getAllMaterias() {
 		return materiaService.getAllMaterias();
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public MateriaResponseDTO getMateria(@PathVariable("id") int id) throws InvalidMateriaException {
 		return materiaService.getMateria(id);
 	}
+
+    @RequestMapping(value = "/follow/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Boolean checkFollowMateria(@PathVariable("id") int id) throws InvalidMateriaException {
+        return materiaService.checkFollow(id);
+    }
 
 }
