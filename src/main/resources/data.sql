@@ -37,7 +37,10 @@ VALUES
 (15, LOAD_FILE(CONCAT(@images_path, 'PDF6.pdf')), 'pdf', STR_TO_DATE('01-01-2019', '%d-%m-%Y')),
 (16, LOAD_FILE(CONCAT(@images_path, 'PDF7.pdf')), 'pdf', STR_TO_DATE('01-01-2019', '%d-%m-%Y')),
 (17, LOAD_FILE(CONCAT(@images_path, 'PDF8.pdf')), 'pdf', STR_TO_DATE('01-01-2019', '%d-%m-%Y')),
-(18, LOAD_FILE(CONCAT(@images_path, 'PDF9.pdf')), 'pdf', STR_TO_DATE('01-01-2019', '%d-%m-%Y'));
+(18, LOAD_FILE(CONCAT(@images_path, 'PDF9.pdf')), 'pdf', STR_TO_DATE('01-01-2019', '%d-%m-%Y')),
+(19, LOAD_FILE(CONCAT(@images_path, 'PDF2.pdf')), 'pdf', STR_TO_DATE('01-01-2019', '%d-%m-%Y')),
+(20, LOAD_FILE(CONCAT(@images_path, 'PDF2.pdf')), 'pdf', STR_TO_DATE('01-01-2019', '%d-%m-%Y')),
+(21, LOAD_FILE(CONCAT(@images_path, 'PDF2.pdf')), 'pdf', STR_TO_DATE('01-01-2019', '%d-%m-%Y'));
 
 insert into materia (id, code, destacada, foto_id, nombre, descripcion)
 VALUES
@@ -57,11 +60,19 @@ VALUES
 ('juan', 'Juan Perez', 'MTIz', 33000111, 'juan@user.com', STR_TO_DATE('1-01-1990', '%d-%m-%Y'),  'hola mundooooo', NULL),
 ('pedro', 'Pedro Batagglia', 'MTIz', 34000111, 'pedro@user.com', STR_TO_DATE('1-01-1997', '%d-%m-%Y'),  'hola mundooooo', NULL);
 
+insert into alumno_materia_observable (id, fecha, alumno_id, materia_id)
+VALUES
+(1, STR_TO_DATE('1-01-2019', '%d-%m-%Y'), 2, 2);
+
+
 
 
 insert into documento (nombre, descripcion, eliminado, extension, fechaCreacion, fechaUltModificacion, publico, alumno_id, entidad_id, idioma_id, materia_id, nivel_id, puntuacion, puntuacionCantidad)
   VALUES
   ('Algoritmos y programación 1', 'Usted aprenderá las nociones básicas de la programación estructurada', 0, 'jpg', STR_TO_DATE('1-01-2018', '%d-%m-%Y'), STR_TO_DATE('1-01-2018', '%d-%m-%Y'), 1, 1, 1, 1, 2, 1, 0 ,0),
+  ('Python para Dummies', 'Usted aprenderá lo básico del lenguaje de programación Python', 0, 'jpg', STR_TO_DATE('1-03-2019', '%d-%m-%Y'),  STR_TO_DATE('1-03-2019', '%d-%m-%Y'), 1, 1, 1, 1, 2, 1, 0 ,0),
+  ('Como graficar con Python', 'Tutorial para realizar gráficos profesionales mediante scripts en python.', 0, 'jpg', STR_TO_DATE('1-01-2018', '%d-%m-%Y'), STR_TO_DATE('1-01-2018', '%d-%m-%Y'), 1, 1, 1, 1, 2, 2, 0 ,0),
+  ('Manual de python', 'Manual para python. Todo lo que necesita saber para manejar el lenguaje al 100%.', 0, 'jpg', STR_TO_DATE('1-01-2018', '%d-%m-%Y'), STR_TO_DATE('1-01-2018', '%d-%m-%Y'), 1, 1, 1, 1, 2, 1, 0 ,0),
   ('Reglas de Oferta y Demanda', 'Nociones básicas de las reglas del mercado.', 0, 'jpg', STR_TO_DATE('10-7-2018', '%d-%m-%Y'), STR_TO_DATE('10-08-2018', '%d-%m-%Y'), 1, 2, 2, 1, 3, 1, 0 ,0),
   ('Análisis de variable compleja', 'Análisis de variable compleja', 0, 'jpg', STR_TO_DATE('1-01-2018', '%d-%m-%Y'), STR_TO_DATE('1-01-2018', '%d-%m-%Y'), 1, 1, 1, 1, 4, 3, 0 ,0),
   ('Física 2', 'Resumen de la materia Física 2 FIUBA', 0, 'jpg', STR_TO_DATE('10-01-2018', '%d-%m-%Y'), STR_TO_DATE('10-01-2018', '%d-%m-%Y'), 1, 1, 1, 1, 4, 2, 0 ,0),
@@ -74,14 +85,17 @@ insert into documento (nombre, descripcion, eliminado, extension, fechaCreacion,
 insert into version (documento_id, file_id)
   VALUES
   (1,10),
-  (2,11),
-  (3,12),
-  (4,13),
-  (5,14),
-  (6,15),
-  (7,16),
-  (8,17),
-  (9,18);
+  (2,19),
+  (3,20),
+  (4,21),
+  (5,11),
+  (6,12),
+  (7,13),
+  (8,14),
+  (9,15),
+  (10,16),
+  (11,17),
+  (12,18);
 
 insert into proveedor (id, cuit, razonSocial, direccion, telefono, email) VALUES
 (1, '234433424', 'Libreria del Sur', 'Esparsek 292', '1143555049', 'libreriadelsur@gmail.com'),

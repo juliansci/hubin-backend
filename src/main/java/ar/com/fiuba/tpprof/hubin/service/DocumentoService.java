@@ -243,9 +243,14 @@ public class DocumentoService {
         List<Documento> documentosRelacionados = new ArrayList<>();
         documentosRelacionados.addAll(documentosRelacionadosMateria);
         documentosRelacionados.addAll(documentosRelacionadosEntidad);
+
         List<DocumentoResponseDTO> documentosResponse = new ArrayList<>();
+        List<Integer> idsDocumentos = new ArrayList<>();
         for (Documento documentoActual : documentosRelacionados) {
-            documentosResponse.add(new DocumentoResponseDTO(documentoActual));
+            if(!idsDocumentos.contains(documentoActual.getId())){
+                documentosResponse.add(new DocumentoResponseDTO(documentoActual));
+                idsDocumentos.add(documentoActual.getId());
+            }
         }
         return documentosResponse;
     }

@@ -16,7 +16,8 @@ public interface DocumentoDao extends CrudRepository<Documento, Integer> {
 			+"(:hasIdEntidad is null or d.entidad.id in (:idEntidad)) and "
 			+"(:hasIdMateria is null or d.materia.id in (:idMateria)) and "
 			+"(:hasIdIdioma is null or d.idioma.id in (:idIdioma)) and"
-			+"(:hasIdNivel is null or d.nivel.id in (:idNivel))")
+			+"(:hasIdNivel is null or d.nivel.id in (:idNivel)) "
+			+"order by id desc")
 	List<Documento> buscarDocumentos(
 			@Param("nombre") String nombre,
 			@Param("hasIdEntidad") Boolean hasIdEntidad,
@@ -28,10 +29,10 @@ public interface DocumentoDao extends CrudRepository<Documento, Integer> {
 			@Param("hasIdNivel") Boolean hasIdNivel,
 			@Param("idNivel") List<Integer> idNivel);
 
-	@Query("select d from Documento d where eliminado = 0 and d.materia.id in (:idMateria)")
+	@Query("select d from Documento d where eliminado = 0 and d.materia.id in (:idMateria) order by id desc")
 	List<Documento> buscarPorIdMateria(@Param("idMateria") Integer idMateria);
 
-	@Query("select d from Documento d where eliminado = 0 and d.entidad.id in (:idEntidad)")
+	@Query("select d from Documento d where eliminado = 0 and d.entidad.id in (:idEntidad) order by id desc")
 	List<Documento> buscarPorIdEntidad(@Param("idEntidad") Integer idEntidad);
 
 	List<Documento> findByCreador(Alumno alumno);
